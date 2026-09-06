@@ -1,0 +1,1126 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-ROF-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "ROF",
+    "name_es": "Cubiertas",
+    "description": "Subsistema AVRA: Cubiertas."
+  },
+  "archetype": {
+    "code": "ROF-VEG",
+    "name_es": "Cubierta plana ajardinada",
+    "description": "Arquetipo AVRA: Cubierta plana ajardinada."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-ROF-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_file": "rof-veg_mapping(1).json",
+    "template_structure": "full_example.json",
+    "generated_on": "2026-09-03",
+    "primary_source": "IVE-BDC BDC26",
+    "retrieval_policy": "Do not invent source-dependent numeric values; preserve inaccessible current IVE values as null with explicit status.",
+    "source_retrieval": {
+      "IVE-BDC": {
+        "status": "partial",
+        "note": "Terminal BDC26 URLs are reachable, but selected price, BC3 decomposition and GWP values are dynamically rendered and were not exposed to the web crawler."
+      },
+      "CTE-CEC": {
+        "status": "retrieved",
+        "note": "Used for roof slot semantics and reference U-value equations."
+      },
+      "CYPE": {
+        "status": "retrieved_when_mapped",
+        "note": "CYPE prices are stored only as secondary observations when configuration/scope differs from the IVE primary solution."
+      }
+    },
+    "gwp_policy": "IVE BDC displays A1-A2-A3 GWP-tot, but no selected-solution GWP was transferred unless directly retrievable.",
+    "cost_scope_note": "IVE roof items are treated as build-up above the structural support; the generic 200 mm RC slab is not included in canonical IVE cost/GWP.",
+    "cte_u_limits_roof_W_m2K": {
+      "A": 0.5,
+      "B": 0.44,
+      "C": 0.4,
+      "D": 0.35,
+      "E": 0.33
+    },
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "ROF-VEG-001",
+      "name_es": "Cubierta ajardinada extensiva invertida con XPS e impermeabilización bituminosa",
+      "description": "Cubierta ajardinada extensiva invertida con XPS e impermeabilización bituminosa",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 7.8",
+          "section": "4.1.7",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAA.3aaa",
+          "mapping": "source_solution",
+          "section": "4.1.7",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 7.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAA.3$",
+          "selector": "aaa",
+          "code": "EQAA.3aaa",
+          "label": "AJA INV HC XPS20 PA-8",
+          "role": "primary",
+          "scope": "green_roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.3$/aaa",
+          "evidence_note": "Código IVE documentado en proyectos de obra como cubierta ajardinada invertida con hormigón celular, XPS 20 mm e impermeabilización PA-8.",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "QDE020",
+          "label": "Cubierta plana no transitable, no ventilada, ajardinada extensiva, tipo invertida. Impermeabilización con láminas asfálticas, tipo monocapa",
+          "role": "secondary_reference",
+          "scope": "green_roof_build_up_above_structural_support",
+          "url": "https://soprema.generadordeprecios.info/obra_nueva/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_extensivas/QDE020_Cubierta_plana_no_transitable__no_v.html",
+          "retrieval_status": "source_page_retrieved_or_search_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "inverted",
+        "ventilation": "unventilated",
+        "total_thickness": 340.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "green_roof",
+        "vegetated": true,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección de tierra",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "growing_substrate",
+            "material_label_es": "Sustrato vegetal extensivo",
+            "thickness": 120,
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "Fi",
+          "name_es": "Capa filtrante",
+          "role": "filter_layer",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil filtrante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "D",
+          "name_es": "Capa drenante",
+          "role": "drainage_layer",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "capa_drenante",
+            "material_label_es": "Capa drenante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora bajo protección",
+          "role": "separation_protection",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil antipunzonante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "XPS",
+            "material_label_es": "Poliestireno extruido (XPS)",
+            "thickness": 20
+          }
+        },
+        {
+          "key": "Cs",
+          "name_es": "Capa separadora",
+          "role": "separation_layer",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora",
+            "material_label_es": "Capa separadora",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Impermeabilización bituminosa",
+            "designation": "PA-8",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 80,
+          "required": true,
+          "properties": {
+            "material_family": "cellular_concrete",
+            "material_label_es": "Hormigón celular",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 90,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAA_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 1.05,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 7.8"
+          },
+          "synthetic": true
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.5,
+          "unit": "m2K/W",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Impermeabilización bituminosa",
+            "designation": "PA-8"
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.3aaa"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 490,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 62,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 55,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "synthetic_poc_evaluation"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 104.73,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.3aaa",
+            "url": "https://bdc.five.es/BDC26/1/EQAA.3$/aaa",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 298.13,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAA.3aaa",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.3$/aaa"
+        },
+        "scope": "green_roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "QDE020",
+            "value": 235.1,
+            "unit": "EUR/m2",
+            "mapping": "partial",
+            "note": "SOPREMA/CYPE extensive inverted analogue; not the exact IVE selector.",
+            "url": "https://soprema.generadordeprecios.info/obra_nueva/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_extensivas/QDE020_Cubierta_plana_no_transitable__no_v.html"
+          },
+          {
+            "dataset": "PublicProject-IVE-derived",
+            "code": "EQAA.3aaa",
+            "value": 76.68,
+            "unit": "EUR/m2",
+            "status": "same_ive_code_external_project_observation",
+            "url": "https://contrataciondelestado.es/wps/wcm/connect/487a8ab0-c7ad-4ae5-aa26-cf40a5f06733/DOC20201117150258DOC%2B3_%2BPLIEGO%2BCONDICIONES%2BCLUB%2BSOCIAL%2B-%2BCopia%2Bautentica.pdf?MOD=AJPERES",
+            "note": "Published project price for the same IVE code; retained as an observation, not current BDC26."
+          }
+        ],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 20.4,
+        "unit": "%",
+        "industrialized_cost": 60.82,
+        "total_direct_cost": 298.13,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0,
+        "environmental_performance": 0.449,
+        "economic_performance": 0.172,
+        "industrialization": 0.204,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-VEG-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-VEG-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-VEG-002",
+      "name_es": "Cubierta ajardinada intensiva invertida con XPS 60 mm, impermeabilización SBS y tierra vegetal de 20 cm",
+      "description": "Cubierta ajardinada intensiva invertida con XPS 60 mm, impermeabilización SBS y tierra vegetal de 20 cm",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 7.8",
+          "section": "4.1.7",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAA.3bec",
+          "mapping": "source_solution",
+          "section": "4.1.7",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 7.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAA.3$",
+          "selector": "bec",
+          "code": "EQAA.3bec",
+          "label": "Cubierta plana ajardinada invertida con XPS 60 mm y LBM-48-FP",
+          "role": "primary",
+          "scope": "green_roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.3$/bec",
+          "evidence_note": "Configuración IVE documentada con formación de pendientes de hormigón de arcilla expandida, impermeabilización SBS LBM-48-FP, XPS 60 mm λ=0,034 W/mK, gravilla 20 cm, geotextil y tierra vegetal 20 cm.",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "QDC020",
+          "label": "Cubierta plana no transitable, no ventilada, ajardinada intensiva, tipo invertida. Impermeabilización con láminas asfálticas, tipo monocapa",
+          "role": "secondary_reference",
+          "scope": "green_roof_build_up_above_structural_support",
+          "url": "https://soprema.generadordeprecios.info/rehabilitacion/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_intensivas/QDC020_Cubierta_plana_no_transitable__no_v.html",
+          "retrieval_status": "source_page_retrieved_or_search_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "inverted",
+        "ventilation": "unventilated",
+        "total_thickness": 660.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "green_roof",
+        "vegetated": true,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección de tierra",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "planting_soil",
+            "material_label_es": "Tierra vegetal para plantación",
+            "thickness": 200
+          }
+        },
+        {
+          "key": "Fi",
+          "name_es": "Capa filtrante",
+          "role": "filter_layer",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil filtrante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "D",
+          "name_es": "Capa drenante",
+          "role": "drainage_layer",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gravel",
+            "material_label_es": "Gravilla drenante",
+            "thickness": 200
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora bajo protección",
+          "role": "separation_protection",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil de fieltro de poliéster antipunzonante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "XPS",
+            "material_label_es": "Poliestireno extruido (XPS)",
+            "thickness": 60,
+            "thermal_conductivity": 0.034,
+            "thermal_resistance": 1.765
+          }
+        },
+        {
+          "key": "Cs",
+          "name_es": "Capa separadora",
+          "role": "separation_layer",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora",
+            "material_label_es": "Capa separadora",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Betún modificado con elastómero SBS",
+            "designation": "LBM-48-FP",
+            "installation": "adherida"
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 80,
+          "required": true,
+          "properties": {
+            "material_family": "expanded_clay_concrete",
+            "material_label_es": "Hormigón de arcilla expandida con capa de regularización",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 90,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAA_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.375,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 7.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.9 + R_AT)",
+            "insulation_thickness_mm": 60,
+            "thermal_conductivity": 0.034,
+            "thermal_resistance": 1.765
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.765,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Betún modificado con elastómero SBS",
+            "designation": "LBM-48-FP",
+            "installation": "adherida"
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.3bec"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 477,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 55,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 52,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C"
+          ],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 100.34,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.3bec",
+            "url": "https://bdc.five.es/BDC26/1/EQAA.3$/bec",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 273.06,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAA.3bec",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.3$/bec"
+        },
+        "scope": "green_roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "QDC020",
+            "value": 79.83,
+            "unit": "EUR/m2",
+            "mapping": "partial",
+            "note": "CYPE intensive inverted analogue; insulation and planting build-up differ from the IVE selector.",
+            "url": "https://soprema.generadordeprecios.info/rehabilitacion/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_intensivas/QDC020_Cubierta_plana_no_transitable__no_v.html"
+          }
+        ],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 22.8,
+        "unit": "%",
+        "industrialized_cost": 62.26,
+        "total_direct_cost": 273.06,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.654,
+        "environmental_performance": 0.472,
+        "economic_performance": 0.242,
+        "industrialization": 0.228,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-VEG-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-VEG-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-VEG-003",
+      "name_es": "Cubierta ajardinada convencional con barrera de vapor, formación de pendientes de arcilla expandida e impermeabilización bituminosa",
+      "description": "Cubierta ajardinada convencional con barrera de vapor, formación de pendientes de arcilla expandida e impermeabilización bituminosa",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 7.8",
+          "section": "4.1.7",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAA.1bdec",
+          "mapping": "source_solution",
+          "section": "4.1.7",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 7.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAA.1$",
+          "selector": "bdec",
+          "code": "EQAA.1bdec",
+          "label": "Azo c/BV e14 HAE LO-40-PE 50",
+          "role": "primary",
+          "scope": "green_roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.1$/bdec",
+          "evidence_note": "Código IVE documentado para cubierta ajardinada convencional con barrera de vapor, formación de pendientes de 14 cm de hormigón con arcilla expandida e impermeabilización LO-40-PE. Las propiedades no explícitas en el resumen deben recuperarse de BDC26.",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "QDC010",
+          "label": "Cubierta plana no transitable, no ventilada, ajardinada intensiva, tipo convencional. Impermeabilización con láminas asfálticas, tipo monocapa",
+          "role": "secondary_reference",
+          "scope": "green_roof_build_up_above_structural_support",
+          "note": "Referencia CYPE para contrastar la lógica convencional; los materiales y espesores exactos deben tomarse de la selección IVE.",
+          "url": "https://soprema.generadordeprecios.info/rehabilitacion/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_intensivas/QDC010_Cubierta_plana_no_transitable__no_v.html",
+          "retrieval_status": "source_page_retrieved_or_search_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "conventional",
+        "ventilation": "unventilated",
+        "total_thickness": 200.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "green_roof",
+        "vegetated": true,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección de tierra",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "planting_soil",
+            "material_label_es": "Tierra vegetal para plantación",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "Fi",
+          "name_es": "Capa filtrante",
+          "role": "filter_layer",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "capa_filtrante",
+            "material_label_es": "Capa filtrante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "D",
+          "name_es": "Capa drenante",
+          "role": "drainage_layer",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "capa_drenante",
+            "material_label_es": "Capa drenante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora bajo protección",
+          "role": "separation_protection",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora_antipunzonante",
+            "material_label_es": "Capa separadora antipunzonante",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Impermeabilización bituminosa",
+            "designation": "LO-40-PE",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "Cs",
+          "name_es": "Capa separadora",
+          "role": "separation_layer",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora",
+            "material_label_es": "Capa separadora",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "material_family": "aislamiento_térmico",
+            "material_label_es": "Aislamiento térmico",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "B",
+          "name_es": "Barrera contra el vapor",
+          "role": "vapour_barrier",
+          "sequence": 80,
+          "required": true,
+          "properties": {
+            "material_family": "barrera_contra_el_vapor",
+            "material_label_es": "Barrera contra el vapor",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 90,
+          "required": true,
+          "properties": {
+            "material_family": "expanded_clay_concrete",
+            "material_label_es": "Hormigón con arcilla expandida",
+            "average_thickness": 140,
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 100,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAA_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.301,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 7.8"
+          },
+          "synthetic": true
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.5,
+          "unit": "m2K/W",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Impermeabilización bituminosa",
+            "designation": "LO-40-PE"
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.1bdec"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 601,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 60,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 57,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "synthetic_poc_evaluation"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 92.5,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAA.1bdec",
+            "url": "https://bdc.five.es/BDC26/1/EQAA.1$/bdec",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 296.62,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAA.1bdec",
+          "url": "https://bdc.five.es/BDC26/1/EQAA.1$/bdec"
+        },
+        "scope": "green_roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "QDC010",
+            "value": 90.8,
+            "unit": "EUR/m2",
+            "mapping": "partial",
+            "note": "CYPE conventional intensive analogue; retained as comparator only.",
+            "url": "https://soprema.generadordeprecios.info/rehabilitacion/Cubiertas/QD_Planas_no_transitables__no_ven/Ajardinadas_intensivas/QDC010_Cubierta_plana_no_transitable__no_v.html"
+          },
+          {
+            "dataset": "AcademicProject-IVE-derived",
+            "code": "EQAA.1bdec",
+            "value": 103.2,
+            "unit": "EUR/m2",
+            "status": "historic_same_ive_code_observation",
+            "url": "https://riunet.upv.es/bitstream/handle/10251/48345/Trabajo%20Final%20Grado.pdf?isAllowed=y&sequence=1",
+            "note": "Historic observation for the same IVE code; too old to use as current canonical cost."
+          }
+        ],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 22.1,
+        "unit": "%",
+        "industrialized_cost": 65.55,
+        "total_direct_cost": 296.62,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.768,
+        "environmental_performance": 0.513,
+        "economic_performance": 0.176,
+        "industrialization": 0.221,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-VEG-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-VEG-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/data/import/generic_solutions/*.json"
+      ],
+      "url": "./schemas/import/generic_solutions.schema.json"
+    },
+    {
+      "fileMatch": [
+        "/data/import/manufacturer_solutions/*.json"
+      ],
+      "url": "./schemas/import/manufacturer_solutions.schema.json"
+    }
+  ],
+  "json.validate.enable": true
+}

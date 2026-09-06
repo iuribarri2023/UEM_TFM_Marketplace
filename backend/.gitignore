@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+storage/*
+!storage/.gitkeep
+*.egg-info/
+build/
+dist/
+
+# Import JSON is intentionally versionable/reviewable. Large binary source assets
+# are ignored by default; use Git LFS/artifact storage if they must be versioned.
+data/import/generic_solutions/assets/**/*
+!data/import/generic_solutions/assets/**/
+!data/import/generic_solutions/assets/**/.gitkeep
+data/import/manufacturer_solutions/assets/**/*
+!data/import/manufacturer_solutions/assets/**/
+!data/import/manufacturer_solutions/assets/**/.gitkeep

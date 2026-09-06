@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente"
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas"
+  },
+  "archetype": {
+    "code": "FAC-VEN",
+    "name_es": "Fachada ventilada"
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-VEN-001",
+      "name_es": "Fachada ventilada genérica",
+      "description": "Ejemplo mínimo del formato de importación.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false
+      },
+      "slots": [
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "thickness": 100
+          }
+        }
+      ],
+      "metrics": {},
+      "cte_compliance": {},
+      "environmental_data": {},
+      "economic_data": {},
+      "industrialization_data": {},
+      "viva_metrics": {},
+      "assets": [
+        {
+          "id": "FAC-VEN-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-001.ifc"
+        }
+      ]
+    }
+  ]
+}

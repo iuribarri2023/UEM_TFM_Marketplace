@@ -1,0 +1,31 @@
+<header class="topbar">
+  <a class="brand" routerLink="/catalogue" aria-label="AVRA VIVA catalogue">
+    <span class="brand-mark">AV</span>
+    <span>AVRA VIVA</span>
+  </a>
+
+  <nav class="main-nav" aria-label="Primary">
+    <a routerLink="/catalogue" routerLinkActive="active">Catalogue</a>
+    <a routerLink="/marketplace" routerLinkActive="active">Marketplace</a>
+    <a routerLink="/manufacturers" routerLinkActive="active">Manufacturers</a>
+    @if (auth.user()?.role === 'MANUFACTURER') {
+      <a routerLink="/manufacturer/solutions" routerLinkActive="active">Manufacturer</a>
+    }
+    @if (auth.user()?.role === 'ADMIN') {
+      <a routerLink="/admin/review" routerLinkActive="active">Admin review</a>
+    }
+  </nav>
+
+  <div class="session">
+    @if (auth.user(); as user) {
+      <span class="session-user">{{ user.email }} · {{ user.role }}</span>
+      <button type="button" class="text-button" (click)="logout()">End session</button>
+    } @else {
+      <a class="button compact" routerLink="/login">Login</a>
+    }
+  </div>
+</header>
+
+<main class="page-shell">
+  <router-outlet />
+</main>

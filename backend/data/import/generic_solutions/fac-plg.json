@@ -1,0 +1,2147 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-FAC-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas",
+    "description": "Subsistema AVRA: Fachadas."
+  },
+  "archetype": {
+    "code": "FAC-LGT",
+    "name_es": "Fachada ligera",
+    "description": "Arquetipo AVRA: Fachada ligera."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-FAC-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_policy": "Mapping manifests define intended solution/source links; fetched source data takes precedence for source-dependent facts.",
+    "null_policy": "Unavailable or scope-incompatible source-dependent values remain null and include a status instead of being inferred from neighbouring variants.",
+    "economic_scope_policy": "A CYPE price is stored as the generic solution unit_cost only when the mapped CYPE unit substantially matches the defined GenericSolution scope. Otherwise it is kept as a source_observation.",
+    "environmental_policy": "GWP A1-A3 is populated only when the mapped source explicitly provides an assembly-level value.",
+    "notes": [
+      "FAC-PLG-001 in the mapping is normalized to FAC-LGT-001 because the archetype is FAC-LGT and the remaining five solution codes use FAC-LGT.",
+      "FLY400 exact mapped URL currently resolves to a 60 mm exterior XPS core, not the 80 mm stated in the mapping. Source data takes precedence.",
+      "CYPE does not provide assembly GWP A1-A3 on the mapped pages.",
+      "For CTE-only F10.1/F15.1 solutions, CTE reference acoustic/mass/waterproofing data are populated, but U remains unresolved where insulation R is not sourced."
+    ],
+    "code_corrections": [
+      {
+        "from": "FAC-PLG-001",
+        "to": "FAC-LGT-001",
+        "reason": "archetype consistency"
+      }
+    ],
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-LGT-001",
+      "name_es": "Fachada ligera Aquapanel Outdoor sobre entramado metálico con lana mineral y PYL",
+      "description": "Fachada ligera de entramado metálico con placa exterior de cemento, lana mineral y placas de yeso laminado",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.11",
+          "code": "F 11.1",
+          "mapping": "partial",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CYPE",
+          "code": "FLY010",
+          "label": "Fachada ligera de placas. Sistema Aquapanel Outdoor KNAUF",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/Sistemas_de_fachada_ligera/FLY010_Fachada_ligera_de_placas._Sistema_A.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "full_lightweight_facade_system"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 242.5,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "render_mortar",
+            "product_family": "render_mortar",
+            "source_material_name_es": "Revestimiento exterior continuo de mortero"
+          }
+        },
+        {
+          "key": "T",
+          "name_es": "Tablero o panel impermeable",
+          "role": "exterior_board",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "cement_board",
+            "product_family": "cement_board",
+            "source_material_name_es": "Placa exterior de cemento Portland",
+            "thickness": 12.5
+          }
+        },
+        {
+          "key": "BA",
+          "name_es": "Barrera contra el agua",
+          "role": "water_barrier",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "l_mina_impermeable_al_agua_y_permeable_al_vapor",
+            "source_material_name_es": "Lámina impermeable al agua y permeable al vapor"
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "steel",
+            "product_family": "galvanized_steel",
+            "source_material_name_es": "Hoja interior de entramado metálico de acero galvanizado",
+            "frame_depth": 100,
+            "stud_spacing": 400
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "position": "external_frame",
+            "thickness": 90,
+            "thermal_conductivity": 0.034,
+            "thermal_resistance": 2.6,
+            "reaction_to_fire_euroclass": "A1"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "position": "internal_frame",
+            "thickness": 40,
+            "thermal_conductivity": 0.033,
+            "thermal_resistance": 1.2
+          }
+        },
+        {
+          "key": "YL",
+          "name_es": "Placa de yeso laminado",
+          "role": "gypsum_board",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board",
+            "product_family": "gypsum_plasterboard",
+            "source_material_name_es": "Placas de yeso laminado",
+            "board_layers": 2,
+            "board_thickness_mm": [
+              12.5,
+              15
+            ]
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.237,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 56,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 46,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 40,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "whole_wall_U_not_available"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 54,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "Mapped CYPE/CTE sources do not provide assembly GWP A1-A3"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 165.77,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FLY010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/Sistemas_de_fachada_ligera/FLY010_Fachada_ligera_de_placas._Sistema_A.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12pck020d",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Banda acústica PU 95 mm",
+            "unit": "m",
+            "quantity_per_fu": 1.2,
+            "unit_price": 0.46,
+            "amount": 0.55,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak020c",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Canal 100/40/0.7 acero galvanizado",
+            "unit": "m",
+            "quantity_per_fu": 0.7,
+            "unit_price": 3.87,
+            "amount": 2.71,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak030ib",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Montante 100/50/1 acero galvanizado",
+            "unit": "m",
+            "quantity_per_fu": 2.75,
+            "unit_price": 6.24,
+            "amount": 17.16,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt16lra020ahm",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Panel lana mineral 90 mm R=2.6",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 28.6,
+            "amount": 30.03,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt15mkv010",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Lámina transpirable impermeable Tyvek StuccoWrap",
+            "unit": "m2",
+            "quantity_per_fu": 1.1,
+            "unit_price": 4.37,
+            "amount": 4.81,
+            "slot": "BA",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12pak010n",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Placa cemento Aquapanel Outdoor 12.5 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 19.97,
+            "amount": 19.97,
+            "slot": "T",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak040v",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Tornillo Aquapanel Maxi TB",
+            "unit": "Ud",
+            "quantity_per_fu": 20,
+            "unit_price": 0.01,
+            "amount": 0.2,
+            "slot": "T",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12psg220",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Fijación taco+tornillo",
+            "unit": "Ud",
+            "quantity_per_fu": 3.2,
+            "unit_price": 0.06,
+            "amount": 0.19,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pck020b",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Banda acústica PU 50 mm",
+            "unit": "m",
+            "quantity_per_fu": 1.2,
+            "unit_price": 0.25,
+            "amount": 0.3,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pfk020b",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Canal 48/30 acero galvanizado",
+            "unit": "m",
+            "quantity_per_fu": 0.7,
+            "unit_price": 1.35,
+            "amount": 0.95,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pfk010b",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Montante 48/35 acero galvanizado",
+            "unit": "m",
+            "quantity_per_fu": 2.75,
+            "unit_price": 1.63,
+            "amount": 4.48,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt16lra020ebm",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Lana mineral 40 mm R=1.2",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 11.09,
+            "amount": 11.64,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ppk010aa",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Placa yeso laminado 12.5 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 4.35,
+            "amount": 4.35,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ppk010db",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Placa yeso laminado BV 15 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 10.76,
+            "amount": 10.76,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ptk010cc",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Tornillo TN",
+            "unit": "Ud",
+            "quantity_per_fu": 9,
+            "unit_price": 0.01,
+            "amount": 0.09,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ptk010cf",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Tornillo TN",
+            "unit": "Ud",
+            "quantity_per_fu": 18,
+            "unit_price": 0.01,
+            "amount": 0.18,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12pik015d",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Pasta adhesiva Perlfix",
+            "unit": "kg",
+            "quantity_per_fu": 0.1,
+            "unit_price": 0.49,
+            "amount": 0.05,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12pik010e",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Pasta juntas Jointfiller",
+            "unit": "kg",
+            "quantity_per_fu": 0.5,
+            "unit_price": 1.02,
+            "amount": 0.51,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12pck010a",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Cinta de juntas",
+            "unit": "m",
+            "quantity_per_fu": 1.6,
+            "unit_price": 0.04,
+            "amount": 0.06,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12pak060g",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Mortero de juntas Aquapanel",
+            "unit": "kg",
+            "quantity_per_fu": 0.6,
+            "unit_price": 2.18,
+            "amount": 1.31,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak050d",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Cinta de juntas Aquapanel",
+            "unit": "m",
+            "quantity_per_fu": 2.1,
+            "unit_price": 0.41,
+            "amount": 0.86,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak085d",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Imprimación Aquapanel",
+            "unit": "kg",
+            "quantity_per_fu": 0.2,
+            "unit_price": 4.12,
+            "amount": 0.82,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak090g",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Mortero superficial Aquapanel",
+            "unit": "kg",
+            "quantity_per_fu": 2.5,
+            "unit_price": 1.33,
+            "amount": 3.33,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak100g",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Malla superficial Aquapanel",
+            "unit": "m2",
+            "quantity_per_fu": 1.1,
+            "unit_price": 1.77,
+            "amount": 1.95,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak120",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Imprimación Fondo Pétreo GRC",
+            "unit": "kg",
+            "quantity_per_fu": 0.14,
+            "unit_price": 3.89,
+            "amount": 0.54,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pak130",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Mortero GRC acabado pétreo",
+            "unit": "kg",
+            "quantity_per_fu": 2.5,
+            "unit_price": 4.32,
+            "amount": 10.8,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt28fvk030",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Perfil de remate",
+            "unit": "m",
+            "quantity_per_fu": 0.17,
+            "unit_price": 0.95,
+            "amount": 0.16,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt15pdw100a",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Cinta impermeabilizante",
+            "unit": "m",
+            "quantity_per_fu": 1.1,
+            "unit_price": 1.09,
+            "amount": 1.2,
+            "slot": "BA",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Oficial 1ª montador",
+            "unit": "h",
+            "quantity_per_fu": 0.663,
+            "unit_price": 25.52,
+            "amount": 16.92,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Ayudante montador",
+            "unit": "h",
+            "quantity_per_fu": 0.663,
+            "unit_price": 23.59,
+            "amount": 15.64,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FLY010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 162.52,
+            "amount": 3.25,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "status": "verified_from_source",
+        "scope_note": "CYPE FLY010 system as defined on mapped page"
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 57.8,
+        "unit": "%",
+        "industrialized_cost": 95.82,
+        "total_direct_cost": 165.77,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.2,
+        "environmental_performance": 0.6,
+        "economic_performance": 0.3,
+        "industrialization": 0.7,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-LGT-002",
+      "name_es": "Fachada ligera ventilada con revestimiento exterior discontinuo, tablero impermeable, lana mineral y placa de yeso laminado",
+      "description": "Fachada ligera ventilada con revestimiento exterior discontinuo, tablero impermeable, lana mineral y placa de yeso laminado",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.10",
+          "code": "F 10.1",
+          "mapping": "source_solution"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 10.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 103.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "revestimiento_exterior_discontinuo_fijado_mec_nicamente",
+            "source_material_name_es": "Revestimiento exterior discontinuo fijado mecánicamente"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "T",
+          "name_es": "Tablero o panel impermeable",
+          "role": "exterior_board",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "tablero_o_panel_impermeable",
+            "source_material_name_es": "Tablero o panel impermeable",
+            "thickness": 10
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 48
+          }
+        },
+        {
+          "key": "YL",
+          "name_es": "Placa de yeso laminado",
+          "role": "gypsum_board",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board",
+            "product_family": "gypsum_plasterboard",
+            "source_material_name_es": "Placa de yeso laminado",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.594,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 10.1",
+            "section": "4.2.10",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.36 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 48,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 10.1",
+            "section": "4.2.10",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 3,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 10.1",
+            "section": "4.2.10",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 43,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 10.1",
+            "section": "4.2.10",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 36,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 10.1",
+            "section": "4.2.10",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 67.85,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 181.41,
+        "source": {
+          "dataset": "AVRA-POC-SYNTHETIC",
+          "status": "synthetic_estimate",
+          "note": "Generated only for database/API demonstration."
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 56.9,
+        "unit": "%",
+        "industrialized_cost": 103.22,
+        "total_direct_cost": 181.41,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.478,
+        "environmental_performance": 0.435,
+        "economic_performance": 0.523,
+        "industrialization": 0.569,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-LGT-003",
+      "name_es": "Fachada ligera no ventilada de panel sándwich de acero con núcleo de lana de roca",
+      "description": "Fachada ligera no ventilada de panel sándwich de acero con núcleo de lana de roca",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.11",
+          "code": "F 11.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CYPE",
+          "code": "FLA030",
+          "variant": "Lana de roca 100 mm",
+          "url": "https://generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/FLA_De_chapas_de_acero_y_paneles_s/FLA030_Fachada_de_paneles_sandwich_aislantc5_0_1c4_0_2_0_1c12_0.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 100
+      },
+      "slots": [
+        {
+          "key": "PS",
+          "name_es": "Panel sándwich con alma aislante",
+          "role": "sandwich_panel",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "steel_sandwich_panel",
+            "product_family": "steel_sandwich_panel",
+            "source_material_name_es": "Panel sándwich de chapa de acero con alma aislante",
+            "core_material": "Lana de roca",
+            "thickness": 100,
+            "outer_sheet_material": "Acero galvanizado prelacado",
+            "outer_sheet_thickness": 0.6,
+            "inner_sheet_material": "Acero galvanizado prelacado",
+            "inner_sheet_thickness": 0.5
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.365,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 11.1",
+            "section": "4.2.11",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.17 + R_PS)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 48,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 2,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 11.1",
+            "section": "4.2.11",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI120",
+          "source": {
+            "dataset": "CYPE",
+            "code": "FLA030",
+            "scope": "selected_mineral_wool_panel"
+          }
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 46,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 44,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_PS_not_reliably_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 44.45,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 82.56,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FLA030",
+          "url": "https://generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/FLA_De_chapas_de_acero_y_paneles_s/FLA030_Fachada_de_paneles_sandwich_aislantc5_0_1c4_0_2_0_1c12_0.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12ppa010cjja",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Panel sándwich acero con núcleo lana de roca 100 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 57.7,
+            "amount": 60.59,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ppa100a",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Perfil de remate",
+            "unit": "m",
+            "quantity_per_fu": 0.2,
+            "unit_price": 9.7,
+            "amount": 1.94,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt13dcp020a",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Tornillo autotaladrante",
+            "unit": "Ud",
+            "quantity_per_fu": 2,
+            "unit_price": 2.05,
+            "amount": 4.1,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo051",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Oficial 1ª montador prefabricados",
+            "unit": "h",
+            "quantity_per_fu": 0.338,
+            "unit_price": 22,
+            "amount": 7.44,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo098",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Ayudante montador prefabricados",
+            "unit": "h",
+            "quantity_per_fu": 0.338,
+            "unit_price": 20.34,
+            "amount": 6.87,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 80.94,
+            "amount": 1.62,
+            "slot": "PS",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified_from_source",
+        "scope_note": "Price excludes supporting structure and singular points, consistent with CYPE item scope."
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 54.3,
+        "unit": "%",
+        "industrialized_cost": 44.83,
+        "total_direct_cost": 82.56,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.747,
+        "environmental_performance": 0.63,
+        "economic_performance": 0.783,
+        "industrialization": 0.543,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-LGT-004",
+      "name_es": "Fachada ligera no ventilada de panel sándwich de acero con núcleo de poliuretano",
+      "description": "Fachada ligera no ventilada de panel sándwich de acero con núcleo de poliuretano",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.11",
+          "code": "F 11.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CYPE",
+          "code": "FLA030",
+          "variant": "Poliuretano 50 mm",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/FLA_De_chapas_de_acero_y_paneles_s/FLA030_Fachada_de_paneles_sandwich_aislantc5_0_1_0_1_0_0_2_0_1c12_0.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 50
+      },
+      "slots": [
+        {
+          "key": "PS",
+          "name_es": "Panel sándwich con alma aislante",
+          "role": "sandwich_panel",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "steel_sandwich_panel",
+            "product_family": "steel_sandwich_panel",
+            "source_material_name_es": "Panel sándwich de chapa de acero con alma aislante",
+            "core_material": "Poliuretano",
+            "thickness": 50,
+            "outer_sheet_material": "Acero galvanizado prelacado",
+            "outer_sheet_thickness": 0.5,
+            "inner_sheet_material": "Acero galvanizado prelacado",
+            "inner_sheet_thickness": 0.5
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.316,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 11.1",
+            "section": "4.2.11",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.17 + R_PS)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 39,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 2,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 11.1",
+            "section": "4.2.11",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 48,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 43,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_PS_not_reliably_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 46.73,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 48.52,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FLA030",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/FLA_De_chapas_de_acero_y_paneles_s/FLA030_Fachada_de_paneles_sandwich_aislantc5_0_1_0_1_0_0_2_0_1c12_0.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12ppa015cka",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Panel sándwich acero con núcleo poliuretano 50 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 28.47,
+            "amount": 29.89,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12ppa100a",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Perfil de remate",
+            "unit": "m",
+            "quantity_per_fu": 0.2,
+            "unit_price": 9.7,
+            "amount": 1.94,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt13dcp020a",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Tornillo autotaladrante",
+            "unit": "Ud",
+            "quantity_per_fu": 2,
+            "unit_price": 2.05,
+            "amount": 4.1,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo051",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Oficial 1ª montador prefabricados",
+            "unit": "h",
+            "quantity_per_fu": 0.275,
+            "unit_price": 22,
+            "amount": 6.05,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo098",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Ayudante montador prefabricados",
+            "unit": "h",
+            "quantity_per_fu": 0.275,
+            "unit_price": 20.34,
+            "amount": 5.59,
+            "slot": "PS",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FLA030",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 47.57,
+            "amount": 0.95,
+            "slot": "PS",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified_from_source",
+        "scope_note": "Price excludes supporting structure and singular points, consistent with CYPE item scope."
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 73.1,
+        "unit": "%",
+        "industrialized_cost": 35.47,
+        "total_direct_cost": 48.52,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.805,
+        "environmental_performance": 0.611,
+        "economic_performance": 0.872,
+        "industrialization": 0.731,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-LGT-005",
+      "name_es": "Fachada ligera de entramado estructural de madera con cámara ventilada, lana mineral y placa de yeso laminado",
+      "description": "Fachada ligera de entramado estructural de madera con cámara ventilada, lana mineral y placa de yeso laminado",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.15",
+          "code": "F 15.1",
+          "mapping": "source_solution"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 15.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "EML010",
+          "label": "Muro estructural de entramado ligero de madera",
+          "url": "https://generadordeprecios.info/rehabilitacion/Estructuras/Madera/Entramados_ligeros/EML010_Muro_estructural_de_entramado_liger.html",
+          "role": "structure_reference",
+          "retrieval_status": "fetched_or_mapping_verified"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAZ010",
+          "label": "Sistema de lamas de madera para fachada ventilada",
+          "url": "https://www.generadordeprecios.info/rehabilitacion/Fachadas_y_particiones/Fachadas_ventiladas/Sistemas_de_lamas_de_madera/FAZ010_Sistema_de_lamas_de_madera__para_fa_0_1_1_0_0_0_3_0_0_0_0_0_0.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": true,
+        "total_thickness": 137.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "revestimiento_exterior_ligero",
+            "source_material_name_es": "Revestimiento exterior ligero"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada_con_rastreles_de_madera",
+            "source_material_name_es": "Cámara de aire ventilada con rastreles de madera",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "BA",
+          "name_es": "Barrera contra el agua",
+          "role": "water_barrier",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "barrera_contra_el_agua",
+            "source_material_name_es": "Barrera contra el agua"
+          }
+        },
+        {
+          "key": "TM",
+          "name_es": "Tablero de madera",
+          "role": "timber_board",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "tablero_de_madera",
+            "source_material_name_es": "Tablero de madera",
+            "thickness": 12
+          }
+        },
+        {
+          "key": "MM",
+          "name_es": "Montantes de madera",
+          "role": "timber_studs",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "montantes_estructurales_de_madera",
+            "source_material_name_es": "Montantes estructurales de madera",
+            "depth_mm": 120
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 80
+          }
+        },
+        {
+          "key": "B",
+          "name_es": "Barrera contra el vapor",
+          "role": "vapour_barrier",
+          "sequence": 70,
+          "required": false,
+          "properties": {
+            "material_family": "other",
+            "product_family": "barrera_contra_el_vapor",
+            "source_material_name_es": "Barrera contra el vapor",
+            "required": "conditional",
+            "requirement": "conditional"
+          }
+        },
+        {
+          "key": "YL",
+          "name_es": "Placa de yeso laminado",
+          "role": "gypsum_board",
+          "sequence": 80,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board",
+            "product_family": "gypsum_plasterboard",
+            "source_material_name_es": "Placa de yeso laminado",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.396,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 15.1",
+            "section": "4.2.15",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1.38/(1.07 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 42,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 15.1",
+            "section": "4.2.15",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 5,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 15.1",
+            "section": "4.2.15",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 45,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 15.1",
+            "section": "4.2.15",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 41,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 15.1",
+            "section": "4.2.15",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 56.31,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 156.89,
+        "source": {
+          "dataset": "AVRA-POC-SYNTHETIC",
+          "status": "synthetic_estimate",
+          "note": "Generated only for database/API demonstration."
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt07mee609bza",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Entramado ligero pino C24 48x148 mm cortado y numerado en taller",
+            "unit": "m3",
+            "quantity_per_fu": 0.019,
+            "unit_price": 1142.4,
+            "amount": 21.71,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt07emr111l",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Clavo acero galvanizado 6x100 mm",
+            "unit": "Ud",
+            "quantity_per_fu": 6,
+            "unit_price": 0.37,
+            "amount": 2.22,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt07emr409a450",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Elementos fijación mecánica acero galvanizado",
+            "unit": "Ud",
+            "quantity_per_fu": 1,
+            "unit_price": 4.5,
+            "amount": 4.5,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo048",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Oficial 1ª montador estructura madera",
+            "unit": "h",
+            "quantity_per_fu": 0.283,
+            "unit_price": 25.84,
+            "amount": 7.31,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo095",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Ayudante montador estructura madera",
+            "unit": "h",
+            "quantity_per_fu": 0.376,
+            "unit_price": 24.53,
+            "amount": 9.22,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "EML010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 44.96,
+            "amount": 0.9,
+            "slot": "MM",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt07mee204a",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Rastrel de madera",
+            "unit": "m",
+            "quantity_per_fu": 2,
+            "unit_price": 2.05,
+            "amount": 4.1,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12psg081d",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Tornillo fijación rastrel",
+            "unit": "Ud",
+            "quantity_per_fu": 10,
+            "unit_price": 0.01,
+            "amount": 0.1,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt22bar020d",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Lamas de madera de acacia",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 18.7,
+            "amount": 19.64,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt07mee205a",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Tornillo acero inoxidable",
+            "unit": "Ud",
+            "quantity_per_fu": 17,
+            "unit_price": 0.14,
+            "amount": 2.38,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt26pro010a",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Malla/protección antiroedores",
+            "unit": "m",
+            "quantity_per_fu": 0.2,
+            "unit_price": 2.99,
+            "amount": 0.6,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo011",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Oficial 1ª montador",
+            "unit": "h",
+            "quantity_per_fu": 0.32,
+            "unit_price": 17.82,
+            "amount": 5.7,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo080",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Ayudante montador",
+            "unit": "h",
+            "quantity_per_fu": 0.32,
+            "unit_price": 16.13,
+            "amount": 5.16,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAZ010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 37.68,
+            "amount": 0.75,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "EML010",
+            "unit_cost": 45.86,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "timber_structural_frame_only",
+            "url": "https://generadordeprecios.info/rehabilitacion/Estructuras/Madera/Entramados_ligeros/EML010_Muro_estructural_de_entramado_liger.html"
+          },
+          {
+            "dataset": "CYPE",
+            "code": "FAZ010",
+            "unit_cost": 38.43,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_timber_cladding_only",
+            "url": "https://www.generadordeprecios.info/rehabilitacion/Fachadas_y_particiones/Fachadas_ventiladas/Sistemas_de_lamas_de_madera/FAZ010_Sistema_de_lamas_de_madera__para_fa_0_1_1_0_0_0_3_0_0_0_0_0_0.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 64.5,
+        "unit": "%",
+        "industrialized_cost": 101.19,
+        "total_direct_cost": 156.89,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.711,
+        "environmental_performance": 0.531,
+        "economic_performance": 0.587,
+        "industrialization": 0.645,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-005-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-005.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-LGT-006",
+      "name_es": "Fachada ligera panelizada con panel sándwich exterior de placa cementosa y núcleo XPS, más trasdosado interior panelizado",
+      "description": "Fachada ligera panelizada con panel sándwich exterior de placa cementosa y núcleo XPS, más trasdosado interior panelizado",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.11",
+          "code": "F 11.1",
+          "mapping": "partial",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CYPE",
+          "code": "FLY400",
+          "label": "Fachada ligera de paneles sándwich. Sistema Sate-Wall THERMOCHIP",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/Sistemas_de_fachada_ligera/FLY400_Fachada_ligera_de_paneles_sandwich.c3_0_1c17_0_1c9_0_0.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "source_correction": "Mapped exterior XPS core 80 mm corrected to source-selected 60 mm."
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 163,
+        "total_thickness_basis": "12+60+12 exterior panel + 12+40+12+15 interior panel"
+      },
+      "slots": [
+        {
+          "key": "T",
+          "name_es": "Tablero o panel impermeable",
+          "role": "exterior_board",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "cement_board",
+            "product_family": "cement_board",
+            "source_material_name_es": "Panel sándwich exterior con cara exterior de placa de cemento reforzado con fibras",
+            "outer_face_thickness": 12,
+            "core_material": "XPS",
+            "core_thickness": 60,
+            "inner_face_material": "Placa de yeso reforzado con fibras",
+            "inner_face_thickness": 12,
+            "component_u_value": 0.527,
+            "reaction_to_fire_euroclass": "B-s1,d0"
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "trasdosado_interior_panelizado",
+            "source_material_name_es": "Trasdosado interior panelizado",
+            "core_material": "XPS",
+            "core_thickness": 40,
+            "component_u_value": 0.74,
+            "reaction_to_fire_euroclass": "B-s1,d0"
+          }
+        },
+        {
+          "key": "YL",
+          "name_es": "Placa de yeso laminado",
+          "role": "gypsum_board",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board",
+            "product_family": "gypsum_plasterboard",
+            "source_material_name_es": "Placa de yeso laminado resistente al fuego",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.363,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 39,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 47,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 45,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "whole_wall_U_not_available"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 51.11,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 122.95,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FLY400",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ligeras/Sistemas_de_fachada_ligera/FLY400_Fachada_ligera_de_paneles_sandwich.c3_0_1c17_0_1c9_0_0.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt13pst020i",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Panel sándwich exterior Thermochip Sate TFBCY 12-60-12",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 51.59,
+            "amount": 54.17,
+            "slot": "T",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt13pst120i",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Tornillo autotaladrante panel exterior",
+            "unit": "Ud",
+            "quantity_per_fu": 12,
+            "unit_price": 0.23,
+            "amount": 2.76,
+            "slot": "T",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt13pst030oa",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Panel sándwich interior Thermochip Wall TPLYY 15-12-40-12",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 50.2,
+            "amount": 52.71,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt13pst120h",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Tornillo autotaladrante panel interior",
+            "unit": "Ud",
+            "quantity_per_fu": 12,
+            "unit_price": 0.2,
+            "amount": 2.4,
+            "slot": "HI",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12psg030a",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Pasta de juntas",
+            "unit": "kg",
+            "quantity_per_fu": 0.15,
+            "unit_price": 1.1,
+            "amount": 0.17,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt12psg040a",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Cinta microperforada papel",
+            "unit": "m",
+            "quantity_per_fu": 2.1,
+            "unit_price": 0.03,
+            "amount": 0.06,
+            "slot": "YL",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo054",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Oficial 1ª montador aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.22,
+            "unit_price": 19.56,
+            "amount": 4.3,
+            "slot": "T",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo101",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Ayudante montador aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.22,
+            "unit_price": 18.05,
+            "amount": 3.97,
+            "slot": "T",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FLY400",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 120.54,
+            "amount": 2.41,
+            "slot": "T",
+            "is_industrialized": true
+          }
+        ],
+        "status": "verified_from_source",
+        "scope_note": "Price excludes support structure and exterior finish, which are also not represented as separate slots in the mapped core panel system."
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 62.3,
+        "unit": "%",
+        "industrialized_cost": 76.6,
+        "total_direct_cost": 122.95,
+        "mapping_coverage": 1.0,
+        "status": "not_assessed_from_available_source"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.749,
+        "environmental_performance": 0.574,
+        "economic_performance": 0.676,
+        "industrialization": 0.623,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-LGT-006-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-LGT-006.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

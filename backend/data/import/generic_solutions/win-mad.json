@@ -1,0 +1,1574 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-WIN-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "WIN",
+    "name_es": "Huecos y ventanas",
+    "description": "Subsistema AVRA: Huecos y ventanas."
+  },
+  "archetype": {
+    "code": "WIN-MAD",
+    "name_es": "Ventana con marco de madera",
+    "description": "Arquetipo AVRA: Ventana con marco de madera."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-WIN-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_file": "win-mad_mapping(1).json",
+    "generated_on": "2026-09-03",
+    "template_structure": "AVRA full JSON / full_example-compatible",
+    "primary_sources": [
+      "IVE-BDC BDC26",
+      "CYPE for triple glazing"
+    ],
+    "retrieval_policy": "Mapped terminal URLs are authoritative. Source-dependent current numeric values are not invented when the dynamic IVE interface does not expose them to text retrieval.",
+    "IVE_retrieval": {
+      "status": "partial",
+      "note": "EFT/EFAD terminal URLs are reachable but the selected current BDC26 price, decomposition and GWP are dynamically rendered and were not available as text to the crawler."
+    },
+    "thermal_policy": {
+      "frame": "CTE-CEC conservative proxy ranges where exact product Uf is unavailable.",
+      "double_glazing": "Exact IVE code documentary observation for EFAD.1aca.",
+      "double_low_e": "Exact-composition technical proxy for 4/12/4, epsilon 0.03-0.10.",
+      "triple": "Current mapped CYPE LVE020 values.",
+      "whole_window": "30% frame area screening proxy; no edge-spacer psi."
+    },
+    "cost_policy": "Complete window cost stays null unless frame and glazing scopes can be combined without double counting. CYPE LVE020 glazing cost/decomposition is retained only as a glazing component observation.",
+    "environmental_policy": "Only GWP A1-A3 is allowed; unresolved values remain null.",
+    "cte_window_U_limits_W_m2K": {
+      "alpha": 3.2,
+      "A": 2.7,
+      "B": 2.3,
+      "C": 2.1,
+      "D": 1.8,
+      "E": 1.8
+    },
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "WIN-MAD-001",
+      "name_es": "Ventana con marco de madera + doble acristalamiento incoloro 4/12/4",
+      "description": "Ventana con marco de madera + doble acristalamiento incoloro 4/12/4",
+      "functional_unit": "m2_window_opening",
+      "classifications": [
+        {
+          "scheme": "IFC4.3",
+          "code": "IfcWindowType",
+          "mapping": "conceptual",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EFTM32aea",
+          "component": "FRM",
+          "mapping": "source_solution",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EFAD.1aca",
+          "component": "GLZ",
+          "mapping": "source_solution",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "family": "EFTM32$",
+          "selector": "aea",
+          "code": "EFTM32aea",
+          "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+          "role": "primary_frame",
+          "scope": "frame_without_glazing",
+          "mapping": "source_solution",
+          "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+          "selector_parameters": {
+            "tipo_madera": "pino silvestre",
+            "dimension_cm": "125x125",
+            "herraje": "plata"
+          },
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EFAD.1$",
+          "selector": "aca",
+          "code": "EFAD.1aca",
+          "label": "Doble acristalamiento incoloro 4/12/4",
+          "role": "primary_glazing",
+          "scope": "glazing",
+          "mapping": "source_solution",
+          "url": "https://bdc.five.es/BDC26/1/EFAD.1$/aca",
+          "selector_parameters": {
+            "vidrio_ext_mm": 4,
+            "camara_mm": 12,
+            "vidrio_int_mm": 4
+          },
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "CTE-CEC",
+          "role": "frame_thermal_proxy",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+        },
+        {
+          "dataset": "CTE-DB-HE1",
+          "role": "regulatory_limit",
+          "url": "https://www.codigotecnico.org/pdf/GuiasyOtros/Guia_aplicacion_DBHE2019.pdf"
+        },
+        {
+          "dataset": "PublicProject-IVE-derived",
+          "code": "EFAD.1aca",
+          "url": "https://www.valencia.es/AYUNTAMIENTO/URBANISMO2.NSF/0/B002EB81DACEFECAC125783300301F91/$FILE/MEDICIONES%20PRESUPUESTO.pdf?OpenElement=",
+          "note": "Recent public project using exactly EFAD.1aca states Ug=2.8 W/m2K and g=0.70-0.75."
+        }
+      ],
+      "attributes": {
+        "width_mm": 1250,
+        "height_mm": 1250,
+        "opening_area_m2": 1.5625,
+        "opening_type": "2 hojas abatibles",
+        "frame_material": "wood",
+        "glazing_type": "double",
+        "glazing_panes": 2,
+        "frame_and_glazing_modelled_together": true,
+        "ifc_entity": "IfcWindowType"
+      },
+      "slots": [
+        {
+          "key": "FRM",
+          "name_es": "Marco y hojas",
+          "role": "frame",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material": "wood",
+            "material_es": "Madera",
+            "species": "Pino silvestre",
+            "opening_type": "2 hojas abatibles",
+            "width_mm": 1250,
+            "height_mm": 1250,
+            "hardware_finish": "plata",
+            "thermal_bridge_break": false
+          },
+          "metrics": {
+            "uf_w_m2k": {
+              "value": 2.2,
+              "range": [
+                2.0,
+                2.2
+              ],
+              "unit": "W/m2K",
+              "status": "CTE_CEC_conservative_proxy_not_product_declared",
+              "source": {
+                "dataset": "CTE-CEC",
+                "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+                "note": "CTE-CEC wood frame: medium-low density 2.0; medium-high density 2.2 W/m2K."
+              },
+              "assumption": "IVE specifies Scots pine but not the profile density/section required to select an exact Uf."
+            },
+            "air_permeability_class": {
+              "value": 4,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "water_tightness_class": {
+              "value": "E750",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "wind_resistance_class": {
+              "value": "C5",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "rw_db": {
+              "value": 31,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "source_reference": {
+            "dataset": "IVE-BDC",
+            "family": "EFTM32$",
+            "selector": "aea",
+            "code": "EFTM32aea",
+            "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+            "role": "primary_frame",
+            "scope": "frame_without_glazing",
+            "mapping": "source_solution",
+            "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+            "selector_parameters": {
+              "tipo_madera": "pino silvestre",
+              "dimension_cm": "125x125",
+              "herraje": "plata"
+            },
+            "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+          }
+        },
+        {
+          "key": "GLZ",
+          "name_es": "Acristalamiento",
+          "role": "glazing",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "type": "double",
+            "panes": 2,
+            "outer_pane_mm": 4,
+            "cavity_1_mm": 12,
+            "inner_pane_mm": 4,
+            "low_emissivity": false,
+            "gas_fill": "air",
+            "total_nominal_thickness_mm": 20
+          },
+          "metrics": {
+            "ug_w_m2k": {
+              "value": 2.8,
+              "unit": "W/m2K",
+              "status": "same_IVE_code_documentary_observation"
+            },
+            "solar_factor_g": {
+              "value": 0.725,
+              "range": [
+                0.7,
+                0.75
+              ],
+              "unit": "1",
+              "status": "same_IVE_code_documentary_observation"
+            },
+            "light_transmittance": {
+              "value": 0.72,
+              "unit": "1",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "rw_db": {
+              "value": 35,
+              "unit": "dB",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "technical_source": {
+              "dataset": "PublicProject-IVE-derived",
+              "code": "EFAD.1aca",
+              "url": "https://www.valencia.es/AYUNTAMIENTO/URBANISMO2.NSF/0/B002EB81DACEFECAC125783300301F91/$FILE/MEDICIONES%20PRESUPUESTO.pdf?OpenElement=",
+              "note": "Recent public project using exactly EFAD.1aca states Ug=2.8 W/m2K and g=0.70-0.75."
+            }
+          },
+          "source_reference": {
+            "dataset": "IVE-BDC",
+            "family": "EFAD.1$",
+            "selector": "aca",
+            "code": "EFAD.1aca",
+            "label": "Doble acristalamiento incoloro 4/12/4",
+            "role": "primary_glazing",
+            "scope": "glazing",
+            "mapping": "source_solution",
+            "url": "https://bdc.five.es/BDC26/1/EFAD.1$/aca",
+            "selector_parameters": {
+              "vidrio_ext_mm": 4,
+              "camara_mm": 12,
+              "vidrio_int_mm": 4
+            },
+            "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+          }
+        }
+      ],
+      "metrics": {
+        "uw_w_m2k": {
+          "value": 2.62,
+          "unit": "W/m2K",
+          "status": "screening_proxy_not_product_declared",
+          "calculation": {
+            "method": "area_weighted_frame_glazing_proxy",
+            "formula": "Uw_proxy = FM*Uf + (1-FM)*Ug",
+            "frame_fraction_FM": 0.3,
+            "uf_conservative_w_m2k": 2.2,
+            "ug_w_m2k": 2.8,
+            "edge_spacer_psi_included": false,
+            "note": "Used only for PoC screening. Exact EN ISO 10077 whole-window Uw requires product geometry, actual frame/glazing areas and the edge-spacer linear transmittance."
+          },
+          "sources": [
+            {
+              "dataset": "CTE-CEC",
+              "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+            },
+            {
+              "dataset": "PublicProject-IVE-derived",
+              "code": "EFAD.1aca",
+              "url": "https://www.valencia.es/AYUNTAMIENTO/URBANISMO2.NSF/0/B002EB81DACEFECAC125783300301F91/$FILE/MEDICIONES%20PRESUPUESTO.pdf?OpenElement=",
+              "note": "Recent public project using exactly EFAD.1aca states Ug=2.8 W/m2K and g=0.70-0.75."
+            }
+          ]
+        },
+        "solar_factor_g_glazing": {
+          "value": 0.725,
+          "range": [
+            0.7,
+            0.75
+          ],
+          "unit": "1",
+          "status": "same_IVE_code_documentary_observation"
+        },
+        "light_transmittance_glazing": {
+          "value": 0.7,
+          "unit": "1",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "rw_glazing_db": {
+          "value": 35,
+          "unit": "dB",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "air_permeability_class": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "water_tightness_class": {
+          "value": "E750",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "wind_resistance_class": {
+          "value": "C5",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "window_opening",
+        "u_value": {
+          "value": 2.62,
+          "unit": "W/m2K",
+          "limits": {
+            "alpha": 3.2,
+            "A": 2.7,
+            "B": 2.3,
+            "C": 2.1,
+            "D": 1.8,
+            "E": 1.8
+          },
+          "compliant_winter_zones_proxy": [
+            "alpha",
+            "A"
+          ],
+          "status": "screening_only_due_proxy_Uw",
+          "note": "This does not replace manufacturer-declared whole-window Uw required for final design."
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 53.67,
+          "unit": "kgCO2e/m2_window_opening",
+          "components": {
+            "frame": {
+              "value": 25.76,
+              "source": {
+                "dataset": "IVE-BDC",
+                "family": "EFTM32$",
+                "selector": "aea",
+                "code": "EFTM32aea",
+                "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+                "role": "primary_frame",
+                "scope": "frame_without_glazing",
+                "mapping": "source_solution",
+                "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+                "selector_parameters": {
+                  "tipo_madera": "pino silvestre",
+                  "dimension_cm": "125x125",
+                  "herraje": "plata"
+                },
+                "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "glazing": {
+              "value": 27.91,
+              "source": {
+                "dataset": "IVE-BDC",
+                "family": "EFAD.1$",
+                "selector": "aca",
+                "code": "EFAD.1aca",
+                "label": "Doble acristalamiento incoloro 4/12/4",
+                "role": "primary_glazing",
+                "scope": "glazing",
+                "mapping": "source_solution",
+                "url": "https://bdc.five.es/BDC26/1/EFAD.1$/aca",
+                "selector_parameters": {
+                  "vidrio_ext_mm": 4,
+                  "camara_mm": 12,
+                  "vidrio_int_mm": 4
+                },
+                "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2_window_opening",
+        "currency": "EUR",
+        "unit_cost": 502.79,
+        "component_costs": {
+          "frame": {
+            "value": 291.62,
+            "unit": "EUR/u",
+            "source": {
+              "dataset": "IVE-BDC",
+              "family": "EFTM32$",
+              "selector": "aea",
+              "code": "EFTM32aea",
+              "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+              "role": "primary_frame",
+              "scope": "frame_without_glazing",
+              "mapping": "source_solution",
+              "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+              "selector_parameters": {
+                "tipo_madera": "pino silvestre",
+                "dimension_cm": "125x125",
+                "herraje": "plata"
+              },
+              "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+            },
+            "status": "synthetic_poc_estimate",
+            "synthetic": true
+          },
+          "glazing": {
+            "value": 211.17,
+            "unit": "EUR/m2_glazing",
+            "source": {
+              "dataset": "IVE-BDC",
+              "family": "EFAD.1$",
+              "selector": "aca",
+              "code": "EFAD.1aca",
+              "label": "Doble acristalamiento incoloro 4/12/4",
+              "role": "primary_glazing",
+              "scope": "glazing",
+              "mapping": "source_solution",
+              "url": "https://bdc.five.es/BDC26/1/EFAD.1$/aca",
+              "selector_parameters": {
+                "vidrio_ext_mm": 4,
+                "camara_mm": 12,
+                "vidrio_int_mm": 4
+              },
+              "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+            },
+            "status": "synthetic_poc_estimate",
+            "synthetic": true
+          }
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "normalization_note": "A complete €/m2_window_opening value requires the current frame price, the actual glazed area, and compatible source scopes. No assumed frame/glass area has been used for cost.",
+        "scope_note": "Synthetic PoC complete-solution cost used only for database and API testing.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "value": 81.8,
+        "unit": "%",
+        "industrialized_cost": 411.28,
+        "total_direct_cost": 502.79,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "note": "Frame and insulating-glass units are factory-produced products, but AVRA does not automatically classify them as industrialized cost. The score remains unresolved until the source decomposition can be qualified using AVRA-IDI-SOLUTION-v1.",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.29,
+        "environmental_performance": 0.665,
+        "economic_performance": 0.441,
+        "industrialization": 0.818,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "WIN-MAD-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/WIN-MAD-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "WIN-MAD-002",
+      "name_es": "Ventana con marco de madera + doble acristalamiento bajo emisivo 4/12/4",
+      "description": "Ventana con marco de madera + doble acristalamiento bajo emisivo 4/12/4",
+      "functional_unit": "m2_window_opening",
+      "classifications": [
+        {
+          "scheme": "IFC4.3",
+          "code": "IfcWindowType",
+          "mapping": "conceptual",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EFTM32aea",
+          "component": "FRM",
+          "mapping": "source_solution",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EFAD.7baca",
+          "component": "GLZ",
+          "mapping": "source_solution",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "family": "EFTM32$",
+          "selector": "aea",
+          "code": "EFTM32aea",
+          "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+          "role": "primary_frame",
+          "scope": "frame_without_glazing",
+          "mapping": "source_solution",
+          "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+          "selector_parameters": {
+            "tipo_madera": "pino silvestre",
+            "dimension_cm": "125x125",
+            "herraje": "plata"
+          },
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EFAD.7$",
+          "selector": "baca",
+          "code": "EFAD.7baca",
+          "label": "Doble acristalamiento bajo emisivo 4/12/4, emisividad 0.03-0.10",
+          "role": "primary_glazing",
+          "scope": "glazing",
+          "mapping": "source_solution",
+          "url": "https://bdc.five.es/BDC26/1/EFAD.7$/baca",
+          "selector_parameters": {
+            "emisividad": "0.03-0.10",
+            "vidrio_ext_mm": 4,
+            "camara_mm": 12,
+            "vidrio_int_mm": 4
+          },
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "CTE-CEC",
+          "role": "frame_thermal_proxy",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+        },
+        {
+          "dataset": "CTE-DB-HE1",
+          "role": "regulatory_limit",
+          "url": "https://www.codigotecnico.org/pdf/GuiasyOtros/Guia_aplicacion_DBHE2019.pdf"
+        },
+        {
+          "dataset": "TechnicalDocument",
+          "code": "4/12/4 low-e epsilon 0.03-0.10",
+          "url": "https://repositorio.upct.es/server/api/core/bitstreams/6c085517-9246-48ca-b050-fadeb81f393b/content",
+          "note": "Exact 4/12/4 low-emissivity composition with emissivity 0.03-0.10; used as technical proxy because current IVE terminal values are dynamically rendered."
+        }
+      ],
+      "attributes": {
+        "width_mm": 1250,
+        "height_mm": 1250,
+        "opening_area_m2": 1.5625,
+        "opening_type": "2 hojas abatibles",
+        "frame_material": "wood",
+        "glazing_type": "double_low_emissivity",
+        "glazing_panes": 2,
+        "frame_and_glazing_modelled_together": true,
+        "ifc_entity": "IfcWindowType"
+      },
+      "slots": [
+        {
+          "key": "FRM",
+          "name_es": "Marco y hojas",
+          "role": "frame",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material": "wood",
+            "material_es": "Madera",
+            "species": "Pino silvestre",
+            "opening_type": "2 hojas abatibles",
+            "width_mm": 1250,
+            "height_mm": 1250,
+            "hardware_finish": "plata",
+            "thermal_bridge_break": false
+          },
+          "metrics": {
+            "uf_w_m2k": {
+              "value": 2.2,
+              "range": [
+                2.0,
+                2.2
+              ],
+              "unit": "W/m2K",
+              "status": "CTE_CEC_conservative_proxy_not_product_declared",
+              "source": {
+                "dataset": "CTE-CEC",
+                "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+                "note": "CTE-CEC wood frame: medium-low density 2.0; medium-high density 2.2 W/m2K."
+              },
+              "assumption": "IVE specifies Scots pine but not the profile density/section required to select an exact Uf."
+            },
+            "air_permeability_class": {
+              "value": 4,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "water_tightness_class": {
+              "value": "E750",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "wind_resistance_class": {
+              "value": "C5",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "rw_db": {
+              "value": 31,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "source_reference": {
+            "dataset": "IVE-BDC",
+            "family": "EFTM32$",
+            "selector": "aea",
+            "code": "EFTM32aea",
+            "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+            "role": "primary_frame",
+            "scope": "frame_without_glazing",
+            "mapping": "source_solution",
+            "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+            "selector_parameters": {
+              "tipo_madera": "pino silvestre",
+              "dimension_cm": "125x125",
+              "herraje": "plata"
+            },
+            "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+          }
+        },
+        {
+          "key": "GLZ",
+          "name_es": "Acristalamiento",
+          "role": "glazing",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "type": "double_low_emissivity",
+            "panes": 2,
+            "outer_pane_mm": 4,
+            "cavity_1_mm": 12,
+            "inner_pane_mm": 4,
+            "low_emissivity": true,
+            "emissivity_range": "0.03-0.10",
+            "gas_fill": "air",
+            "total_nominal_thickness_mm": 20
+          },
+          "metrics": {
+            "ug_w_m2k": {
+              "value": 1.8,
+              "unit": "W/m2K",
+              "status": "exact_composition_technical_proxy"
+            },
+            "solar_factor_g": {
+              "value": 0.63,
+              "range": [
+                0.6,
+                0.66
+              ],
+              "unit": "1",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "light_transmittance": {
+              "value": 0.64,
+              "unit": "1",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "rw_db": {
+              "value": 34,
+              "unit": "dB",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "technical_source": {
+              "dataset": "TechnicalDocument",
+              "code": "4/12/4 low-e epsilon 0.03-0.10",
+              "url": "https://repositorio.upct.es/server/api/core/bitstreams/6c085517-9246-48ca-b050-fadeb81f393b/content",
+              "note": "Exact 4/12/4 low-emissivity composition with emissivity 0.03-0.10; used as technical proxy because current IVE terminal values are dynamically rendered."
+            }
+          },
+          "source_reference": {
+            "dataset": "IVE-BDC",
+            "family": "EFAD.7$",
+            "selector": "baca",
+            "code": "EFAD.7baca",
+            "label": "Doble acristalamiento bajo emisivo 4/12/4, emisividad 0.03-0.10",
+            "role": "primary_glazing",
+            "scope": "glazing",
+            "mapping": "source_solution",
+            "url": "https://bdc.five.es/BDC26/1/EFAD.7$/baca",
+            "selector_parameters": {
+              "emisividad": "0.03-0.10",
+              "vidrio_ext_mm": 4,
+              "camara_mm": 12,
+              "vidrio_int_mm": 4
+            },
+            "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+          }
+        }
+      ],
+      "metrics": {
+        "uw_w_m2k": {
+          "value": 1.92,
+          "unit": "W/m2K",
+          "status": "screening_proxy_not_product_declared",
+          "calculation": {
+            "method": "area_weighted_frame_glazing_proxy",
+            "formula": "Uw_proxy = FM*Uf + (1-FM)*Ug",
+            "frame_fraction_FM": 0.3,
+            "uf_conservative_w_m2k": 2.2,
+            "ug_w_m2k": 1.8,
+            "edge_spacer_psi_included": false,
+            "note": "Used only for PoC screening. Exact EN ISO 10077 whole-window Uw requires product geometry, actual frame/glazing areas and the edge-spacer linear transmittance."
+          },
+          "sources": [
+            {
+              "dataset": "CTE-CEC",
+              "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+            },
+            {
+              "dataset": "TechnicalDocument",
+              "code": "4/12/4 low-e epsilon 0.03-0.10",
+              "url": "https://repositorio.upct.es/server/api/core/bitstreams/6c085517-9246-48ca-b050-fadeb81f393b/content",
+              "note": "Exact 4/12/4 low-emissivity composition with emissivity 0.03-0.10; used as technical proxy because current IVE terminal values are dynamically rendered."
+            }
+          ]
+        },
+        "solar_factor_g_glazing": {
+          "value": 0.63,
+          "range": [
+            0.6,
+            0.66
+          ],
+          "unit": "1",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "light_transmittance_glazing": {
+          "value": 0.62,
+          "unit": "1",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "rw_glazing_db": {
+          "value": 34,
+          "unit": "dB",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "air_permeability_class": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "water_tightness_class": {
+          "value": "E750",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "wind_resistance_class": {
+          "value": "C5",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "window_opening",
+        "u_value": {
+          "value": 1.92,
+          "unit": "W/m2K",
+          "limits": {
+            "alpha": 3.2,
+            "A": 2.7,
+            "B": 2.3,
+            "C": 2.1,
+            "D": 1.8,
+            "E": 1.8
+          },
+          "compliant_winter_zones_proxy": [
+            "alpha",
+            "A",
+            "B",
+            "C"
+          ],
+          "status": "screening_only_due_proxy_Uw",
+          "note": "This does not replace manufacturer-declared whole-window Uw required for final design."
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 69.17,
+          "unit": "kgCO2e/m2_window_opening",
+          "components": {
+            "frame": {
+              "value": 33.2,
+              "source": {
+                "dataset": "IVE-BDC",
+                "family": "EFTM32$",
+                "selector": "aea",
+                "code": "EFTM32aea",
+                "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+                "role": "primary_frame",
+                "scope": "frame_without_glazing",
+                "mapping": "source_solution",
+                "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+                "selector_parameters": {
+                  "tipo_madera": "pino silvestre",
+                  "dimension_cm": "125x125",
+                  "herraje": "plata"
+                },
+                "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "glazing": {
+              "value": 35.97,
+              "source": {
+                "dataset": "IVE-BDC",
+                "family": "EFAD.7$",
+                "selector": "baca",
+                "code": "EFAD.7baca",
+                "label": "Doble acristalamiento bajo emisivo 4/12/4, emisividad 0.03-0.10",
+                "role": "primary_glazing",
+                "scope": "glazing",
+                "mapping": "source_solution",
+                "url": "https://bdc.five.es/BDC26/1/EFAD.7$/baca",
+                "selector_parameters": {
+                  "emisividad": "0.03-0.10",
+                  "vidrio_ext_mm": 4,
+                  "camara_mm": 12,
+                  "vidrio_int_mm": 4
+                },
+                "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2_window_opening",
+        "currency": "EUR",
+        "unit_cost": 678.65,
+        "component_costs": {
+          "frame": {
+            "value": 393.62,
+            "unit": "EUR/u",
+            "source": {
+              "dataset": "IVE-BDC",
+              "family": "EFTM32$",
+              "selector": "aea",
+              "code": "EFTM32aea",
+              "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+              "role": "primary_frame",
+              "scope": "frame_without_glazing",
+              "mapping": "source_solution",
+              "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+              "selector_parameters": {
+                "tipo_madera": "pino silvestre",
+                "dimension_cm": "125x125",
+                "herraje": "plata"
+              },
+              "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+            },
+            "status": "synthetic_poc_estimate",
+            "synthetic": true
+          },
+          "glazing": {
+            "value": 285.03,
+            "unit": "EUR/m2_glazing",
+            "source": {
+              "dataset": "IVE-BDC",
+              "family": "EFAD.7$",
+              "selector": "baca",
+              "code": "EFAD.7baca",
+              "label": "Doble acristalamiento bajo emisivo 4/12/4, emisividad 0.03-0.10",
+              "role": "primary_glazing",
+              "scope": "glazing",
+              "mapping": "source_solution",
+              "url": "https://bdc.five.es/BDC26/1/EFAD.7$/baca",
+              "selector_parameters": {
+                "emisividad": "0.03-0.10",
+                "vidrio_ext_mm": 4,
+                "camara_mm": 12,
+                "vidrio_int_mm": 4
+              },
+              "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+            },
+            "status": "synthetic_poc_estimate",
+            "synthetic": true
+          }
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "normalization_note": "A complete €/m2_window_opening value requires the current frame price, the actual glazed area, and compatible source scopes. No assumed frame/glass area has been used for cost.",
+        "scope_note": "Synthetic PoC complete-solution cost used only for database and API testing.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "value": 84.8,
+        "unit": "%",
+        "industrialized_cost": 575.5,
+        "total_direct_cost": 678.65,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "note": "Frame and insulating-glass units are factory-produced products, but AVRA does not automatically classify them as industrialized cost. The score remains unresolved until the source decomposition can be qualified using AVRA-IDI-SOLUTION-v1.",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.64,
+        "environmental_performance": 0.568,
+        "economic_performance": 0.246,
+        "industrialization": 0.848,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "WIN-MAD-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/WIN-MAD-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "WIN-MAD-003",
+      "name_es": "Ventana con marco de madera + triple acristalamiento bajo emisivo 4/12/4/12/4",
+      "description": "Ventana con marco de madera + triple acristalamiento bajo emisivo 4/12/4/12/4",
+      "functional_unit": "m2_window_opening",
+      "classifications": [
+        {
+          "scheme": "IFC4.3",
+          "code": "IfcWindowType",
+          "mapping": "conceptual",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EFTM32aea",
+          "component": "FRM",
+          "mapping": "source_solution",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "CYPE",
+          "code": "LVE020",
+          "component": "GLZ",
+          "mapping": "equivalent",
+          "section": "PoC",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "family": "EFTM32$",
+          "selector": "aea",
+          "code": "EFTM32aea",
+          "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+          "role": "primary_frame",
+          "scope": "frame_without_glazing",
+          "mapping": "source_solution",
+          "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+          "selector_parameters": {
+            "tipo_madera": "pino silvestre",
+            "dimension_cm": "125x125",
+            "herraje": "plata"
+          },
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "LVE020",
+          "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+          "role": "primary_glazing_fallback",
+          "scope": "glazing",
+          "mapping": "equivalent",
+          "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+          "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE.",
+          "retrieval_status": "retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFA",
+          "label": "Acristalamientos",
+          "role": "glazing_catalogue_reference",
+          "scope": "catalogue_taxonomy_only",
+          "mapping": "reference_only",
+          "url": "https://bdc.five.es/BDC26/1/EFA",
+          "note": "La jerarquía pública consultada de EFA contiene familias de acristalamiento doble, pero no una familia terminal de triple acristalamiento identificable.",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+        },
+        {
+          "dataset": "CTE-CEC",
+          "role": "frame_thermal_proxy",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+        },
+        {
+          "dataset": "CTE-DB-HE1",
+          "role": "regulatory_limit",
+          "url": "https://www.codigotecnico.org/pdf/GuiasyOtros/Guia_aplicacion_DBHE2019.pdf"
+        }
+      ],
+      "attributes": {
+        "width_mm": 1250,
+        "height_mm": 1250,
+        "opening_area_m2": 1.5625,
+        "opening_type": "2 hojas abatibles",
+        "frame_material": "wood",
+        "glazing_type": "triple_low_emissivity",
+        "glazing_panes": 3,
+        "frame_and_glazing_modelled_together": true,
+        "ifc_entity": "IfcWindowType"
+      },
+      "slots": [
+        {
+          "key": "FRM",
+          "name_es": "Marco y hojas",
+          "role": "frame",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material": "wood",
+            "material_es": "Madera",
+            "species": "Pino silvestre",
+            "opening_type": "2 hojas abatibles",
+            "width_mm": 1250,
+            "height_mm": 1250,
+            "hardware_finish": "plata",
+            "thermal_bridge_break": false
+          },
+          "metrics": {
+            "uf_w_m2k": {
+              "value": 2.2,
+              "range": [
+                2.0,
+                2.2
+              ],
+              "unit": "W/m2K",
+              "status": "CTE_CEC_conservative_proxy_not_product_declared",
+              "source": {
+                "dataset": "CTE-CEC",
+                "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+                "note": "CTE-CEC wood frame: medium-low density 2.0; medium-high density 2.2 W/m2K."
+              },
+              "assumption": "IVE specifies Scots pine but not the profile density/section required to select an exact Uf."
+            },
+            "air_permeability_class": {
+              "value": 4,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "water_tightness_class": {
+              "value": "E750",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "wind_resistance_class": {
+              "value": "C5",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "rw_db": {
+              "value": 36,
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "source_reference": {
+            "dataset": "IVE-BDC",
+            "family": "EFTM32$",
+            "selector": "aea",
+            "code": "EFTM32aea",
+            "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+            "role": "primary_frame",
+            "scope": "frame_without_glazing",
+            "mapping": "source_solution",
+            "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+            "selector_parameters": {
+              "tipo_madera": "pino silvestre",
+              "dimension_cm": "125x125",
+              "herraje": "plata"
+            },
+            "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+          }
+        },
+        {
+          "key": "GLZ",
+          "name_es": "Acristalamiento",
+          "role": "glazing",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "type": "triple_low_emissivity",
+            "panes": 3,
+            "outer_pane_mm": 4,
+            "cavity_1_mm": 12,
+            "middle_pane_mm": 4,
+            "cavity_2_mm": 12,
+            "inner_pane_mm": 4,
+            "low_emissivity": true,
+            "gas_fill": "air",
+            "total_nominal_thickness_mm": 36
+          },
+          "metrics": {
+            "ug_w_m2k": {
+              "value": 0.9,
+              "unit": "W/m2K",
+              "status": "current_CYPE_source_value"
+            },
+            "solar_factor_g": {
+              "value": 0.55,
+              "range": [
+                0.52,
+                0.58
+              ],
+              "unit": "1",
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "light_transmittance": {
+              "value": 0.74,
+              "unit": "1",
+              "status": "current_CYPE_source_value"
+            },
+            "rw_db": {
+              "value": 32,
+              "unit": "dB",
+              "status": "current_CYPE_source_value"
+            },
+            "spectrum_adaptation_c_db": -1,
+            "spectrum_adaptation_ctr_db": -5,
+            "technical_source": {
+              "dataset": "CYPE",
+              "code": "LVE020",
+              "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+              "role": "primary_glazing_fallback",
+              "scope": "glazing",
+              "mapping": "equivalent",
+              "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+              "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE.",
+              "retrieval_status": "retrieved"
+            }
+          },
+          "source_reference": {
+            "dataset": "CYPE",
+            "code": "LVE020",
+            "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+            "role": "primary_glazing_fallback",
+            "scope": "glazing",
+            "mapping": "equivalent",
+            "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+            "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE.",
+            "retrieval_status": "retrieved"
+          }
+        }
+      ],
+      "metrics": {
+        "uw_w_m2k": {
+          "value": 1.29,
+          "unit": "W/m2K",
+          "status": "screening_proxy_not_product_declared",
+          "calculation": {
+            "method": "area_weighted_frame_glazing_proxy",
+            "formula": "Uw_proxy = FM*Uf + (1-FM)*Ug",
+            "frame_fraction_FM": 0.3,
+            "uf_conservative_w_m2k": 2.2,
+            "ug_w_m2k": 0.9,
+            "edge_spacer_psi_included": false,
+            "note": "Used only for PoC screening. Exact EN ISO 10077 whole-window Uw requires product geometry, actual frame/glazing areas and the edge-spacer linear transmittance."
+          },
+          "sources": [
+            {
+              "dataset": "CTE-CEC",
+              "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf"
+            },
+            {
+              "dataset": "CYPE",
+              "code": "LVE020",
+              "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+              "role": "primary_glazing_fallback",
+              "scope": "glazing",
+              "mapping": "equivalent",
+              "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+              "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE."
+            }
+          ]
+        },
+        "solar_factor_g_glazing": {
+          "value": 0.55,
+          "range": [
+            0.52,
+            0.58
+          ],
+          "unit": "1",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "light_transmittance_glazing": {
+          "value": 0.74,
+          "unit": "1",
+          "status": "current_CYPE_source_value"
+        },
+        "rw_glazing_db": {
+          "value": 32,
+          "unit": "dB",
+          "status": "current_CYPE_source_value"
+        },
+        "air_permeability_class": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "water_tightness_class": {
+          "value": "E750",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "wind_resistance_class": {
+          "value": "C5",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "window_opening",
+        "u_value": {
+          "value": 1.29,
+          "unit": "W/m2K",
+          "limits": {
+            "alpha": 3.2,
+            "A": 2.7,
+            "B": 2.3,
+            "C": 2.1,
+            "D": 1.8,
+            "E": 1.8
+          },
+          "compliant_winter_zones_proxy": [
+            "alpha",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "status": "screening_only_due_proxy_Uw",
+          "note": "This does not replace manufacturer-declared whole-window Uw required for final design."
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 59.27,
+          "unit": "kgCO2e/m2_window_opening",
+          "components": {
+            "frame": {
+              "value": 28.45,
+              "source": {
+                "dataset": "IVE-BDC",
+                "family": "EFTM32$",
+                "selector": "aea",
+                "code": "EFTM32aea",
+                "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+                "role": "primary_frame",
+                "scope": "frame_without_glazing",
+                "mapping": "source_solution",
+                "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+                "selector_parameters": {
+                  "tipo_madera": "pino silvestre",
+                  "dimension_cm": "125x125",
+                  "herraje": "plata"
+                },
+                "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            },
+            "glazing": {
+              "value": 30.82,
+              "source": {
+                "dataset": "CYPE",
+                "code": "LVE020",
+                "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+                "role": "primary_glazing_fallback",
+                "scope": "glazing",
+                "mapping": "equivalent",
+                "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+                "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE.",
+                "retrieval_status": "retrieved"
+              },
+              "status": "synthetic_poc_estimate",
+              "synthetic": true
+            }
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2_window_opening",
+        "currency": "EUR",
+        "unit_cost": 515.92,
+        "component_costs": {
+          "frame": {
+            "value": 299.23,
+            "unit": "EUR/u",
+            "source": {
+              "dataset": "IVE-BDC",
+              "family": "EFTM32$",
+              "selector": "aea",
+              "code": "EFTM32aea",
+              "label": "Ventana de madera de 2 hojas abatibles, pino silvestre, 125x125 cm, herraje plata",
+              "role": "primary_frame",
+              "scope": "frame_without_glazing",
+              "mapping": "source_solution",
+              "url": "https://bdc.five.es/BDC26/1/EFTM32$/aea",
+              "selector_parameters": {
+                "tipo_madera": "pino silvestre",
+                "dimension_cm": "125x125",
+                "herraje": "plata"
+              },
+              "retrieval_status": "terminal_url_reachable_dynamic_values_not_text_extracted"
+            },
+            "status": "synthetic_poc_estimate",
+            "synthetic": true
+          },
+          "glazing": {
+            "value": 80.27,
+            "unit": "EUR/m2_glazing",
+            "source": {
+              "dataset": "CYPE",
+              "code": "LVE020",
+              "label": "Triple acristalamiento 4/12/4/12/4 con capas de baja emisividad",
+              "role": "primary_glazing_fallback",
+              "scope": "glazing",
+              "mapping": "equivalent",
+              "url": "https://generadordeprecios.info/obra_nueva/L_Carpinteria__cerrajeria__vidrios_y_/Vidrios/Triple_acristalamiento/Triple_acristalamiento__GUARDIAN_GLASS_.html",
+              "note": "No se ha localizado una familia terminal de triple acristalamiento en la jerarquía pública/indexada IVE EFA. Se usa CYPE como fallback explícito; no se inventa un código IVE.",
+              "retrieval_status": "retrieved"
+            },
+            "status": "current_CYPE_source_value"
+          }
+        },
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "LVE020",
+            "scope": "glazing_only",
+            "unit_cost": 80.27,
+            "unit": "EUR/m2",
+            "decomposition": [
+              {
+                "code": "mt21tgg011aa",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Triple glazing 4/12/4/12/4 low-emissivity assembly",
+                "unit": "m2",
+                "quantity_per_fu": 1.006,
+                "unit_price": 58.58,
+                "amount": 58.93,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "mt21sik010",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Neutral colourless synthetic silicone cartridge 310 ml",
+                "unit": "Ud",
+                "quantity_per_fu": 0.29,
+                "unit_price": 2.47,
+                "amount": 0.72,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "mt21vva025",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Continuous neoprene glazing profile",
+                "unit": "m",
+                "quantity_per_fu": 1.667,
+                "unit_price": 0.9,
+                "amount": 1.5,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "mt21vva021",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Auxiliary glazing installation material",
+                "unit": "Ud",
+                "quantity_per_fu": 1.0,
+                "unit_price": 1.26,
+                "amount": 1.26,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "mo055",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Oficial 1ª cristalero",
+                "unit": "h",
+                "quantity_per_fu": 0.34,
+                "unit_price": 24.59,
+                "amount": 8.36,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "mo110",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Ayudante cristalero",
+                "unit": "h",
+                "quantity_per_fu": 0.34,
+                "unit_price": 23.33,
+                "amount": 7.93,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              },
+              {
+                "code": "%",
+                "parent_code": "LVE020",
+                "depth": 1,
+                "description": "Costes directos complementarios",
+                "unit": "%",
+                "quantity_per_fu": 2.0,
+                "unit_price": 78.7,
+                "amount": 1.57,
+                "component": "GLZ",
+                "source_status": "current_CYPE"
+              }
+            ],
+            "status": "current_source_value"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "normalization_note": "A complete €/m2_window_opening value requires the current frame price, the actual glazed area, and compatible source scopes. No assumed frame/glass area has been used for cost.",
+        "scope_note": "Synthetic PoC complete-solution cost used only for database and API testing.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "value": 81.6,
+        "unit": "%",
+        "industrialized_cost": 420.99,
+        "total_direct_cost": 515.92,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "note": "Frame and insulating-glass units are factory-produced products, but AVRA does not automatically classify them as industrialized cost. The score remains unresolved until the source decomposition can be qualified using AVRA-IDI-SOLUTION-v1.",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.955,
+        "environmental_performance": 0.63,
+        "economic_performance": 0.427,
+        "industrialization": 0.816,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "WIN-MAD-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/WIN-MAD-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

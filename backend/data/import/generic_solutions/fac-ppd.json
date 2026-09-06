@@ -1,0 +1,1170 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-FAC-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas",
+    "description": "Subsistema AVRA: Fachadas."
+  },
+  "archetype": {
+    "code": "FAC-PRC",
+    "name_es": "Fachada prefabricada pesada",
+    "description": "Arquetipo AVRA: Fachada prefabricada pesada."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-FAC-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_file": "fac-ppd_mapping.json",
+    "template_file": "full_example.json",
+    "policy": "Do not invent source-dependent numeric values. Preserve unresolved fields as null with status.",
+    "notes": [
+      "CTE acoustic, mass and waterproofing values are equivalent-configuration reference proxies, not measured IVE values.",
+      "U-values are calculated from the mapped CTE formula. For FAC-PRC-001/002/003, generic CTE mineral-wool lambda 0.039 W/mK is used; FAC-PRC-004 uses the IVE-declared 0.032 W/mK.",
+      "FAC-PRC-002 and FAC-PRC-003 mapped variants exclude integrated carpentry. Adjacent source captures with carpentry were not used for price or GWP."
+    ],
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-PRC-001",
+      "name_es": "Fachada prefabricada pesada de panel macizo de hormigón armado con trasdosado interior aislado",
+      "description": "Hoja principal de fachada compuesta por paneles industrializados macizos de hormigón armado de 100 mm de espesor, anclados a la estructura mediante apoyos inferiores y anclajes superiores de acero galvanizado, incluyendo transporte, izado, replanteo, nivelación, sellados y remates, con trasdosado interior sobre montantes, lana mineral de 45 mm y doble placa de yeso laminado de 15 mm.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "F 12.3",
+          "section": "4.2.12",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.2bab",
+          "label": "Hoja principal panel macizo industrializado HA 100 mm trasdosado",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.2$/bab",
+          "retrieval_status": "verified_from_source_capture"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 178,
+        "total_thickness_basis": "derived_from_declared_component_dimensions"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "precast_reinforced_concrete",
+            "product_family": "solid_precast_concrete_panel",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico y acústico",
+          "role": "thermal_acoustic_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_insulation",
+            "hydrophilic": false,
+            "thickness": 45,
+            "integrated_in_slot": "TI"
+          }
+        },
+        {
+          "key": "TI",
+          "name_es": "Trasdosado interior seco",
+          "role": "internal_dry_lining",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board_system",
+            "product_family": "metal_stud_plasterboard_lining",
+            "system": "78/600 (48+15+15) LM45",
+            "system_depth": 78,
+            "stud_material": "galvanized_steel",
+            "stud_depth": 48,
+            "insulation_material": "mineral_wool",
+            "insulation_thickness": 45,
+            "board_material": "gypsum_plasterboard",
+            "board_layers": 2,
+            "board_thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.627,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.3",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.44 + R_AT)",
+            "insulation_thickness_mm": 45,
+            "thermal_conductivity": 0.039,
+            "thermal_conductivity_unit": "W/mK",
+            "thermal_conductivity_basis": "CTE-CEC generic mineral wool reference",
+            "thermal_resistance": 1.154
+          }
+        },
+        "surface_mass": {
+          "value": 311,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.3",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 3,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.3",
+            "reference": "CTE-DB-HS",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI120",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 61,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.3",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 56,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.3",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A"
+          ],
+          "basis": "calculated_from_equivalent_CTE_CEC_configuration"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 7.99,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 1
+          },
+          "observations": [
+            {
+              "source": {
+                "dataset": "IVE-BDC",
+                "code": "EFCG.2bab"
+              },
+              "indicator": "GWP-total",
+              "modules": [
+                "A1",
+                "A2",
+                "A3"
+              ],
+              "value": 7.99,
+              "unit": "kgCO2e/m2"
+            }
+          ],
+          "status": "verified"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 168.1,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.2bab",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.2$/bab"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "M00A.8a",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Oficial 1ª construcción",
+            "unit": "h",
+            "quantity_per_fu": 0.188,
+            "unit_price": 28.17,
+            "amount": 5.3,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "M00A10a",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Ayudante construcción",
+            "unit": "h",
+            "quantity_per_fu": 0.188,
+            "unit_price": 24.64,
+            "amount": 4.63,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "M00A12a",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Peón ordinario construcción",
+            "unit": "h",
+            "quantity_per_fu": 0.1,
+            "unit_price": 23.35,
+            "amount": 2.34,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "MMMG.6f",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Grúa autopropulsada 60T",
+            "unit": "h",
+            "quantity_per_fu": 0.15,
+            "unit_price": 171.43,
+            "amount": 25.71,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "PFPH.3b",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Panel macizo industrializado HA 100 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.0,
+            "unit_price": 60.0,
+            "amount": 60.0,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "manufacturing"
+          },
+          {
+            "code": "PEAA.1ba",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Acero ø6 AE-215-L en barra",
+            "unit": "kg",
+            "quantity_per_fu": 14.0,
+            "unit_price": 1.5,
+            "amount": 21.0,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "auxiliary"
+          },
+          {
+            "code": "%",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 118.98,
+            "amount": 2.38,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-001-IC-001",
+            "industrialization_phase": "auxiliary"
+          },
+          {
+            "code": "EFPY12ababb",
+            "parent_code": "EFCG.2bab",
+            "depth": 1,
+            "description": "Trasdosado 78/600 (48+15+15) LM45",
+            "unit": "m2",
+            "quantity_per_fu": 1.0,
+            "unit_price": 46.74,
+            "amount": 46.74,
+            "slot": "TI",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified"
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 72.2,
+        "unit": "%",
+        "industrialized_cost": 121.36,
+        "total_direct_cost": 168.1,
+        "mapping_coverage": 1.0,
+        "component": {
+          "id": "FAC-PRC-001-IC-001",
+          "description": "Componente de fachada industrializado y operaciones directamente asociadas a su montaje"
+        },
+        "status": "calculated_from_verified_decomposition"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.439,
+        "environmental_performance": 0.933,
+        "economic_performance": 0.558,
+        "industrialization": 0.722,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-PRC-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-PRC-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-PRC-002",
+      "name_es": "Fachada prefabricada pesada de panel sándwich HA-EPS-HA con trasdosado interior aislado",
+      "description": "Fachada de panel sándwich industrializado de hormigón armado con hoja exterior e interior de 100 mm, núcleo de EPS de 80 mm y trasdosado interior de 78 mm con lana mineral de 45 mm y doble placa de yeso laminado de 15 mm.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "F 12.8",
+          "section": "4.2.12",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.3aaba",
+          "label": "Hoja principal panel sándwich industrializado HA-EPS-HA trasdosado",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.3$/aaba",
+          "retrieval_status": "exact_numeric_data_not_retrieved",
+          "note": "The mapped selector is EFCG.3aaba. The available source capture in this conversation corresponds to adjacent variant EFCG.3aabb, which includes integrated façade joinery. Geometry common to the selector family was reused, but its price, BC3 decomposition and GWP were not transferred to avoid mixing functional scopes."
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 358,
+        "total_thickness_basis": "derived_from_declared_component_dimensions"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "precast_reinforced_concrete",
+            "product_family": "precast_concrete_sandwich_panel",
+            "outer_leaf_thickness": 100,
+            "core_material": "EPS",
+            "core_thickness": 80,
+            "inner_leaf_thickness": 100
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico y acústico",
+          "role": "thermal_acoustic_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_insulation",
+            "hydrophilic": false,
+            "thickness": 45,
+            "integrated_in_slot": "TI"
+          }
+        },
+        {
+          "key": "TI",
+          "name_es": "Trasdosado interior seco",
+          "role": "internal_dry_lining",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board_system",
+            "product_family": "metal_stud_plasterboard_lining",
+            "system": "78/600 (48+15+15) LM45",
+            "system_depth": 78,
+            "stud_material": "galvanized_steel",
+            "stud_depth": 48,
+            "insulation_material": "mineral_wool",
+            "insulation_thickness": 45,
+            "board_material": "gypsum_plasterboard",
+            "board_layers": 2,
+            "board_thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.62,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.46 + R_AT)",
+            "insulation_thickness_mm": 45,
+            "thermal_conductivity": 0.039,
+            "thermal_conductivity_unit": "W/mK",
+            "thermal_conductivity_basis": "CTE-CEC generic mineral wool reference",
+            "thermal_resistance": 1.154
+          }
+        },
+        "surface_mass": {
+          "value": 266,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 3,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HS",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI120",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 59,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 54,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A"
+          ],
+          "basis": "calculated_from_equivalent_CTE_CEC_configuration"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 75.41,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 272.66,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.3aaba",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.3$/aaba"
+        },
+        "bc3_decomposition": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 81.0,
+        "unit": "%",
+        "industrialized_cost": 220.85,
+        "total_direct_cost": 272.66,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.447,
+        "environmental_performance": 0.372,
+        "economic_performance": 0.282,
+        "industrialization": 0.81,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-PRC-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-PRC-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-PRC-003",
+      "name_es": "Fachada prefabricada pesada de panel sándwich HA-EPS-HA con acabado arquitectónico y trasdosado interior",
+      "description": "Fachada de panel sándwich industrializado de hormigón armado con acabado arquitectónico especial, hoja exterior de 70 mm, núcleo de EPS de 60 mm, hoja interior de 90 mm y trasdosado interior de 78 mm con lana mineral de 45 mm y doble placa de yeso laminado de 15 mm.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "F 12.8",
+          "section": "4.2.12",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.4bba",
+          "label": "Hoja principal panel sándwich industrializado HA acabados especiales trasdosado",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.4$/bba",
+          "retrieval_status": "exact_numeric_data_not_retrieved",
+          "note": "The mapped selector is EFCG.4bba. The available source capture in this conversation corresponds to adjacent variant EFCG.4bbb, which includes integrated façade joinery. Geometry common to the selector family was reused, but its price, BC3 decomposition and GWP were not transferred to avoid mixing functional scopes."
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 298,
+        "total_thickness_basis": "derived_from_declared_component_dimensions"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "precast_reinforced_concrete",
+            "product_family": "precast_concrete_sandwich_panel",
+            "outer_leaf_thickness": 70,
+            "core_material": "EPS",
+            "core_thickness": 60,
+            "inner_leaf_thickness": 90,
+            "finish": "architectural_special_finish"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico y acústico",
+          "role": "thermal_acoustic_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_insulation",
+            "hydrophilic": false,
+            "thickness": 45,
+            "integrated_in_slot": "TI"
+          }
+        },
+        {
+          "key": "TI",
+          "name_es": "Trasdosado interior seco",
+          "role": "internal_dry_lining",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board_system",
+            "product_family": "metal_stud_plasterboard_lining",
+            "system": "78/600 (48+15+15) LM45",
+            "system_depth": 78,
+            "stud_material": "galvanized_steel",
+            "stud_depth": 48,
+            "insulation_material": "mineral_wool",
+            "insulation_thickness": 45,
+            "board_material": "gypsum_plasterboard",
+            "board_layers": 2,
+            "board_thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.62,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.46 + R_AT)",
+            "insulation_thickness_mm": 45,
+            "thermal_conductivity": 0.039,
+            "thermal_conductivity_unit": "W/mK",
+            "thermal_conductivity_basis": "CTE-CEC generic mineral wool reference",
+            "thermal_resistance": 1.154
+          }
+        },
+        "surface_mass": {
+          "value": 266,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 3,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HS",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI120",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 59,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 54,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 12.8",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A"
+          ],
+          "basis": "calculated_from_equivalent_CTE_CEC_configuration"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 52.7,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 312.77,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.4bba",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.4$/bba"
+        },
+        "bc3_decomposition": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 73.0,
+        "unit": "%",
+        "industrialized_cost": 228.32,
+        "total_direct_cost": 312.77,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.447,
+        "environmental_performance": 0.561,
+        "economic_performance": 0.177,
+        "industrialization": 0.73,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-PRC-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-PRC-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-PRC-004",
+      "name_es": "Fachada prefabricada pesada de panel GRC con bastidor metálico y trasdosado interior aislado",
+      "description": "Hoja principal de fachada formada por panel industrializado de hormigón reforzado con fibra de vidrio (GRC), compuesto por lámina de GRC de 10 mm, cámara de aire de 30 mm y bastidor tubular de acero galvanizado de 80 mm, anclado mediante ménsulas metálicas regulables, con trasdosado interior sobre montantes de 125 mm, lana mineral de 120 mm y doble placa de yeso laminado de 15 mm.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "F 14.2a",
+          "section": "4.2.14",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.6c",
+          "label": "Hoja principal panel GRC con perfilería metálica trasdosado",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.6$/c",
+          "retrieval_status": "verified_from_source_capture"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 275,
+        "total_thickness_basis": "derived_from_declared_component_dimensions"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "GRC",
+            "product_family": "industrialized_grc_panel_metal_frame",
+            "grc_thickness": 10,
+            "air_cavity": 30,
+            "frame_material": "galvanized_steel",
+            "frame_depth": 80
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico y acústico",
+          "role": "thermal_acoustic_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_insulation",
+            "hydrophilic": false,
+            "thickness": 120,
+            "integrated_in_slot": "TI",
+            "thermal_conductivity": 0.032,
+            "thermal_resistance": 3.75
+          }
+        },
+        {
+          "key": "TI",
+          "name_es": "Trasdosado interior seco",
+          "role": "internal_dry_lining",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board_system",
+            "product_family": "metal_stud_plasterboard_lining",
+            "system": "155/600 (125+15+15) LM120",
+            "system_depth": 155,
+            "stud_material": "galvanized_steel",
+            "stud_depth": 125,
+            "insulation_material": "mineral_wool",
+            "insulation_thickness": 120,
+            "board_material": "gypsum_plasterboard",
+            "board_layers": 2,
+            "board_thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.24,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 14.2a",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.42 + R_AT)",
+            "insulation_thickness_mm": 120,
+            "thermal_conductivity": 0.032,
+            "thermal_conductivity_unit": "W/mK",
+            "thermal_conductivity_basis": "IVE-BDC component ENTE.1baja",
+            "thermal_resistance": 3.75
+          }
+        },
+        "surface_mass": {
+          "value": 56,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 14.2a",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 3,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 14.2a",
+            "reference": "CTE-DB-HS",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI120",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 57,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 14.2a",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 51,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 14.2a",
+            "reference": "CTE-DB-HR",
+            "mapping": "equivalent_proxy"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "basis": "calculated_from_equivalent_CTE_CEC_configuration"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 23.54,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 1
+          },
+          "observations": [
+            {
+              "source": {
+                "dataset": "IVE-BDC",
+                "code": "EFCG.6c"
+              },
+              "indicator": "GWP-total",
+              "modules": [
+                "A1",
+                "A2",
+                "A3"
+              ],
+              "value": 23.54,
+              "unit": "kgCO2e/m2"
+            }
+          ],
+          "status": "verified"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 304.5,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCG.6c",
+          "url": "https://bdc.five.es/BDC26/1/EFCG.6$/c"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "M00A.8a",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Oficial 1ª construcción",
+            "unit": "h",
+            "quantity_per_fu": 0.255,
+            "unit_price": 28.17,
+            "amount": 7.18,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "M00A10a",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Ayudante construcción",
+            "unit": "h",
+            "quantity_per_fu": 0.255,
+            "unit_price": 24.64,
+            "amount": 6.28,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "M00M.8a",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Oficial 1ª metal",
+            "unit": "h",
+            "quantity_per_fu": 0.125,
+            "unit_price": 25.17,
+            "amount": 3.15,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "MMMG.6f",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Grúa autopropulsada 60T",
+            "unit": "h",
+            "quantity_per_fu": 0.05,
+            "unit_price": 171.43,
+            "amount": 8.57,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "assembly"
+          },
+          {
+            "code": "PFPH.9a",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Panel industrializado GRC con perfilería metálica",
+            "unit": "m2",
+            "quantity_per_fu": 1.0,
+            "unit_price": 190.0,
+            "amount": 190.0,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "manufacturing"
+          },
+          {
+            "code": "PEAA.1ba",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Acero ø6 AE-215-L en barra",
+            "unit": "kg",
+            "quantity_per_fu": 7.0,
+            "unit_price": 1.5,
+            "amount": 10.5,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "auxiliary"
+          },
+          {
+            "code": "%",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 225.68,
+            "amount": 4.51,
+            "slot": "HP",
+            "is_industrialized": true,
+            "industrialized_component_id": "FAC-PRC-004-IC-001",
+            "industrialization_phase": "auxiliary"
+          },
+          {
+            "code": "EFPY12abeab",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "Trasdosado 155/600 (125+15+15)",
+            "unit": "m2",
+            "quantity_per_fu": 1.0,
+            "unit_price": 51.98,
+            "amount": 51.98,
+            "slot": "TI",
+            "is_industrialized": false
+          },
+          {
+            "code": "ENTE.1baja",
+            "parent_code": "EFCG.6c",
+            "depth": 1,
+            "description": "MW 0.032 e 120 mm interior/sob perfilería",
+            "unit": "m2",
+            "quantity_per_fu": 1.0,
+            "unit_price": 22.33,
+            "amount": 22.33,
+            "slot": "AT",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified"
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 75.6,
+        "unit": "%",
+        "industrialized_cost": 230.19,
+        "total_direct_cost": 304.5,
+        "mapping_coverage": 1.0,
+        "component": {
+          "id": "FAC-PRC-004-IC-001",
+          "description": "Componente de fachada industrializado y operaciones directamente asociadas a su montaje"
+        },
+        "status": "calculated_from_verified_decomposition"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.894,
+        "environmental_performance": 0.804,
+        "economic_performance": 0.199,
+        "industrialization": 0.756,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-PRC-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-PRC-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

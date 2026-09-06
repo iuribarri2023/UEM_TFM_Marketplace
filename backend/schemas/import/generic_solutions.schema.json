@@ -1,0 +1,432 @@
+{
+  "$defs": {
+    "AssetImport": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "IFC",
+            "PDF",
+            "PNG",
+            "JPG",
+            "JPEG",
+            "WEBP"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "role": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "uri": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "format",
+        "role",
+        "uri"
+      ],
+      "title": "AssetImport",
+      "type": "object"
+    },
+    "CatalogueNodeImport": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name_es": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Name Es",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        }
+      },
+      "required": [
+        "code",
+        "name_es"
+      ],
+      "title": "CatalogueNodeImport",
+      "type": "object"
+    },
+    "GenericSolutionImport": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name_es": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Name Es",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "functional_unit": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Functional Unit"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "classifications": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Classifications",
+          "type": "array"
+        },
+        "source_references": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Source References",
+          "type": "array"
+        },
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "slots": {
+          "items": {
+            "$ref": "#/$defs/SlotImport"
+          },
+          "title": "Slots",
+          "type": "array"
+        },
+        "metrics": {
+          "additionalProperties": true,
+          "title": "Metrics",
+          "type": "object"
+        },
+        "cte_compliance": {
+          "additionalProperties": true,
+          "title": "Cte Compliance",
+          "type": "object"
+        },
+        "environmental_data": {
+          "additionalProperties": true,
+          "title": "Environmental Data",
+          "type": "object"
+        },
+        "economic_data": {
+          "additionalProperties": true,
+          "title": "Economic Data",
+          "type": "object"
+        },
+        "industrialization_data": {
+          "additionalProperties": true,
+          "title": "Industrialization Data",
+          "type": "object"
+        },
+        "viva_metrics": {
+          "additionalProperties": true,
+          "title": "Viva Metrics",
+          "type": "object"
+        },
+        "assets": {
+          "contains": {
+            "properties": {
+              "format": {
+                "const": "IFC"
+              }
+            },
+            "required": [
+              "format"
+            ],
+            "type": "object"
+          },
+          "items": {
+            "$ref": "#/$defs/AssetImport"
+          },
+          "minItems": 1,
+          "title": "Assets",
+          "type": "array"
+        },
+        "data_quality_notes": {
+          "anyOf": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Quality Notes"
+        }
+      },
+      "required": [
+        "code",
+        "name_es",
+        "assets"
+      ],
+      "title": "GenericSolutionImport",
+      "type": "object"
+    },
+    "SlotImport": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Key",
+          "type": "string"
+        },
+        "name_es": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Name Es",
+          "type": "string"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true,
+          "title": "Properties"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Metrics"
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Reference"
+        }
+      },
+      "required": [
+        "key",
+        "name_es",
+        "sequence"
+      ],
+      "title": "SlotImport",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "minLength": 1,
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "data_template": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Data Template"
+    },
+    "property_dictionary": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Property Dictionary"
+    },
+    "regulatory_profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Regulatory Profile"
+    },
+    "normalization_profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Normalization Profile"
+    },
+    "industrialization_profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Industrialization Profile"
+    },
+    "generation_provenance": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generation Provenance"
+    },
+    "system": {
+      "$ref": "#/$defs/CatalogueNodeImport"
+    },
+    "subsystem": {
+      "$ref": "#/$defs/CatalogueNodeImport"
+    },
+    "archetype": {
+      "$ref": "#/$defs/CatalogueNodeImport"
+    },
+    "generic_solutions": {
+      "items": {
+        "$ref": "#/$defs/GenericSolutionImport"
+      },
+      "minItems": 1,
+      "title": "Generic Solutions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "system",
+    "subsystem",
+    "archetype",
+    "generic_solutions"
+  ],
+  "title": "GenericCatalogueImport",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avra-viva.local/schemas/import/generic_solutions.schema.json"
+}

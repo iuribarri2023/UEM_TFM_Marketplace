@@ -1,0 +1,1833 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-FAC-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas",
+    "description": "Subsistema AVRA: Fachadas."
+  },
+  "archetype": {
+    "code": "FAC-ETI",
+    "name_es": "Fachada con sistema ETICS",
+    "description": "Arquetipo AVRA: Fachada con sistema ETICS."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-FAC-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_policy": "Mapping manifests define intended solution/source links; fetched source data takes precedence for source-dependent facts.",
+    "null_policy": "Unavailable or scope-incompatible source-dependent values remain null and include a status instead of being inferred from neighbouring variants.",
+    "economic_scope_policy": "A CYPE price is stored as the generic solution unit_cost only when the mapped CYPE unit substantially matches the defined GenericSolution scope. Otherwise it is kept as a source_observation.",
+    "environmental_policy": "GWP A1-A3 is populated only when the mapped source explicitly provides an assembly-level value.",
+    "notes": [
+      "CYPE ETICS items price only the ETICS layer/system; the mapped ceramic or CLT support and generic interior finish are not included. Therefore full-wall unit_cost remains null and the fetched CYPE price is preserved as a scoped source observation.",
+      "CYPE did not expose assembly-level GWP A1-A3 on the mapped pages, so environmental values remain unresolved.",
+      "For F4.1 masonry solutions, U is calculated from the CTE-CEC formula and the exact insulation thermal resistance fetched from CYPE.",
+      "The exact FVC010 cork selector could not be text-fetched; its material intent is retained from the mapping, but source-dependent cost and thermal data are left unresolved."
+    ],
+    "code_corrections": [],
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-ETI-001",
+      "name_es": "Fachada ETICS con EPS blanco sobre hoja principal de ladrillo cerámico",
+      "description": "ETICS con EPS blanco sobre hoja principal de ladrillo cerámico",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 4.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FSM010",
+          "variant": "EPS blanco 60 mm",
+          "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=0%7C0_0_7_2%7C0%7CFSM010%7Cfsm_010%3A_0_0_1c7_0_3c13_0_2c12_0_120_0_0_7_1c4_0_250_1c9_0%7Choja_exterior_vista_sys%3A_0",
+          "role": "etics_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 190.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Mortero acrílico"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "EPS",
+            "product_family": "expanded_polystyrene_board",
+            "source_material_name_es": "Poliestireno expandido (EPS)",
+            "thickness": 60,
+            "thermal_resistance": 1.58,
+            "thermal_conductivity": 0.038,
+            "reaction_to_fire_euroclass": "E"
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.51,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.38 + R_AT)",
+            "R_AT": 1.58,
+            "R_AT_source": "CYPE insulation product data"
+          }
+        },
+        "surface_mass": {
+          "value": 161,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B"
+          ],
+          "basis": "CTE-CEC F4.1 formula + CYPE insulation R-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 31.11,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 137.09,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FSM010",
+          "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=0%7C0_0_7_2%7C0%7CFSM010%7Cfsm_010%3A_0_0_1c7_0_3c13_0_2c12_0_120_0_0_7_1c4_0_250_1c9_0%7Choja_exterior_vista_sys%3A_0"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FSM010",
+            "unit_cost": 64.67,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ETICS_layer_only",
+            "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=0%7C0_0_7_2%7C0%7CFSM010%7Cfsm_010%3A_0_0_1c7_0_3c13_0_2c12_0_120_0_0_7_1c4_0_250_1c9_0%7Choja_exterior_vista_sys%3A_0"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 34.6,
+        "unit": "%",
+        "industrialized_cost": 47.43,
+        "total_direct_cost": 137.09,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.576,
+        "environmental_performance": 0.741,
+        "economic_performance": 0.639,
+        "industrialization": 0.346,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-ETI-002",
+      "name_es": "Fachada ETICS con EPS grafito sobre hoja principal de ladrillo cerámico",
+      "description": "ETICS con EPS grafito sobre hoja principal de ladrillo cerámico",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 4.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FSM090",
+          "label": "Sistema ETICS Rhonatherm, PINTURAS ISAVAL",
+          "variant": "Panel Grafito Rhonatherm 60 mm",
+          "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=1%7C0_0_2%7C0%7CFSM090%7Cfsm_090%3Ac4_0_1c6_0_2c9_0_1c7_0_2c6_0_120_0_0_7_0_0_250_0_0%7Choja_exterior_vista_sys%3A_0",
+          "role": "etics_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 190.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Mortero acrílico"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "EPS",
+            "product_family": "expanded_polystyrene_board",
+            "source_material_name_es": "Poliestireno expandido con grafito (EPS-G)",
+            "thickness": 60,
+            "thermal_resistance": 1.88,
+            "thermal_conductivity": 0.032,
+            "reaction_to_fire_euroclass": "E"
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.442,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.38 + R_AT)",
+            "R_AT": 1.88,
+            "R_AT_source": "CYPE insulation product data"
+          }
+        },
+        "surface_mass": {
+          "value": 161,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C"
+          ],
+          "basis": "CTE-CEC F4.1 formula + CYPE insulation R-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 33.46,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 163.81,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FSM090",
+          "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=1%7C0_0_2%7C0%7CFSM090%7Cfsm_090%3Ac4_0_1c6_0_2c9_0_1c7_0_2c6_0_120_0_0_7_0_0_250_0_0%7Choja_exterior_vista_sys%3A_0"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FSM090",
+            "unit_cost": 74.38,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ETICS_layer_only",
+            "url": "https://generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=1%7C0_0_2%7C0%7CFSM090%7Cfsm_090%3Ac4_0_1c6_0_2c9_0_1c7_0_2c6_0_120_0_0_7_0_0_250_0_0%7Choja_exterior_vista_sys%3A_0"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 33.2,
+        "unit": "%",
+        "industrialized_cost": 54.38,
+        "total_direct_cost": 163.81,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.656,
+        "environmental_performance": 0.721,
+        "economic_performance": 0.569,
+        "industrialization": 0.332,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-ETI-003",
+      "name_es": "Fachada ETICS con lana de roca sobre hoja principal de ladrillo cerámico",
+      "description": "ETICS con lana de roca sobre hoja principal de ladrillo cerámico",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 4.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FSM030",
+          "label": "Sistema ETICS Ecosate, ISOVER",
+          "variant": "Lana de roca 60 mm",
+          "url": "https://generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ETICS/FSM_Revestimiento_continuo_mineral/FSM030_Sistema_ETICS_Ecosate%C2%AE__ISOVER__de_.html",
+          "role": "etics_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 190.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Revestimiento mineral"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana de roca",
+            "thickness": 60,
+            "thermal_resistance": 1.75,
+            "thermal_conductivity": 0.035,
+            "reaction_to_fire_euroclass": "A1"
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.469,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.38 + R_AT)",
+            "R_AT": 1.75,
+            "R_AT_source": "CYPE insulation product data"
+          }
+        },
+        "surface_mass": {
+          "value": 161,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C"
+          ],
+          "basis": "CTE-CEC F4.1 formula + CYPE insulation R-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 31.31,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 175.75,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FSM030",
+          "url": "https://generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ETICS/FSM_Revestimiento_continuo_mineral/FSM030_Sistema_ETICS_Ecosate%C2%AE__ISOVER__de_.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt28iso220h",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Perfil de arranque Ecosate ISOVER aluminio 60 mm",
+            "unit": "m",
+            "quantity_per_fu": 0.6,
+            "unit_price": 1.44,
+            "amount": 0.86,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso230h",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Perfil de cierre superior Ecosate ISOVER aluminio 60 mm",
+            "unit": "m",
+            "quantity_per_fu": 0.17,
+            "unit_price": 12.15,
+            "amount": 2.07,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso010a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Mortero polimérico Ecosate Base",
+            "unit": "kg",
+            "quantity_per_fu": 10,
+            "unit_price": 0.97,
+            "amount": 9.7,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt16lri070x",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Panel rígido lana de roca TF Profi 60 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.1,
+            "unit_price": 22.65,
+            "amount": 24.92,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso090a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Taco expansión Ecosate H1 Eco 95",
+            "unit": "Ud",
+            "quantity_per_fu": 8,
+            "unit_price": 0.41,
+            "amount": 3.28,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso240b",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Perfil PVC con malla para goterón",
+            "unit": "m",
+            "quantity_per_fu": 0.3,
+            "unit_price": 3.2,
+            "amount": 0.96,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso200b",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Perfil esquina PVC con malla",
+            "unit": "m",
+            "quantity_per_fu": 0.3,
+            "unit_price": 0.52,
+            "amount": 0.16,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso210h",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Perfil cierre lateral aluminio",
+            "unit": "m",
+            "quantity_per_fu": 0.3,
+            "unit_price": 9.65,
+            "amount": 2.9,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso070a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Malla fibra vidrio antiálcalis 160 g/m2",
+            "unit": "m2",
+            "quantity_per_fu": 1.1,
+            "unit_price": 1.78,
+            "amount": 1.96,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso030a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Imprimación Ecosate Primer",
+            "unit": "kg",
+            "quantity_per_fu": 0.35,
+            "unit_price": 7.72,
+            "amount": 2.7,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28iso050a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Revestimiento Ecosate Basic L",
+            "unit": "kg",
+            "quantity_per_fu": 2.5,
+            "unit_price": 5.68,
+            "amount": 14.2,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt15bas010a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Cordón PE expandido fondo junta",
+            "unit": "m",
+            "quantity_per_fu": 0.17,
+            "unit_price": 0.06,
+            "amount": 0.01,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt15bas035a",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Masilla elastómera monocomponente",
+            "unit": "Ud",
+            "quantity_per_fu": 0.02,
+            "unit_price": 8.24,
+            "amount": 0.16,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo054",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Oficial 1ª montador de aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.101,
+            "unit_price": 25.52,
+            "amount": 2.58,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo101",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Ayudante montador de aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.101,
+            "unit_price": 23.59,
+            "amount": 2.38,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo039",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Oficial 1ª revocador",
+            "unit": "h",
+            "quantity_per_fu": 0.605,
+            "unit_price": 24.83,
+            "amount": 15.02,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo079",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Ayudante revocador",
+            "unit": "h",
+            "quantity_per_fu": 0.605,
+            "unit_price": 23.59,
+            "amount": 14.27,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FSM030",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 98.13,
+            "amount": 1.96,
+            "slot": "RE",
+            "is_industrialized": false
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FSM030",
+            "unit_cost": 100.09,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ETICS_layer_only",
+            "url": "https://generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ETICS/FSM_Revestimiento_continuo_mineral/FSM030_Sistema_ETICS_Ecosate%C2%AE__ISOVER__de_.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 35.0,
+        "unit": "%",
+        "industrialized_cost": 61.51,
+        "total_direct_cost": 175.75,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.625,
+        "environmental_performance": 0.739,
+        "economic_performance": 0.537,
+        "industrialization": 0.35,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-ETI-004",
+      "name_es": "Fachada ETICS con PIR sobre hoja principal de ladrillo cerámico",
+      "description": "ETICS con PIR sobre hoja principal de ladrillo cerámico",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 4.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FSM080",
+          "label": "Sistema ETICS Mapetherm PIR, MAPEI SPAIN",
+          "variant": "PIR 40 mm",
+          "url": "https://carm.generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=3%7C0_0%7C2%7CFSM080%7Cfsm_080%3Ac3_0c3_1_0_0_1_0_2c4_0_1c5_0_1_0_1_0_0_1c5_0_1c3_0_1c3_0_1_0_0_3%7Choja_exterior_vista_sys%3A_0",
+          "role": "etics_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 170.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Revestimiento continuo de resinas de silicona"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "PIR",
+            "product_family": "polyisocyanurate_board",
+            "source_material_name_es": "Poliisocianurato (PIR)",
+            "thickness": 40,
+            "thermal_resistance": 1.48,
+            "thermal_conductivity": 0.027,
+            "reaction_to_fire_euroclass": "E"
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.538,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.38 + R_AT)",
+            "R_AT": 1.48,
+            "R_AT_source": "CYPE insulation product data"
+          }
+        },
+        "surface_mass": {
+          "value": 161,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 4.1",
+            "section": "4.2.4",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B"
+          ],
+          "basis": "CTE-CEC F4.1 formula + CYPE insulation R-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 43.26,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 135.26,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FSM080",
+          "url": "https://carm.generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=3%7C0_0%7C2%7CFSM080%7Cfsm_080%3Ac3_0c3_1_0_0_1_0_2c4_0_1c5_0_1_0_1_0_0_1c5_0_1c3_0_1c3_0_1_0_0_3%7Choja_exterior_vista_sys%3A_0"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FSM080",
+            "unit_cost": 75.69,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ETICS_layer_only",
+            "url": "https://carm.generadordeprecios.info/obra_nueva/calculaprecio.asp?Valor=3%7C0_0%7C2%7CFSM080%7Cfsm_080%3Ac3_0c3_1_0_0_1_0_2c4_0_1c5_0_1_0_1_0_0_1c5_0_1c3_0_1c3_0_1_0_0_3%7Choja_exterior_vista_sys%3A_0"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 34.7,
+        "unit": "%",
+        "industrialized_cost": 46.94,
+        "total_direct_cost": 135.26,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.544,
+        "environmental_performance": 0.639,
+        "economic_performance": 0.644,
+        "industrialization": 0.347,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-ETI-005",
+      "name_es": "Fachada ETICS de origen vegetal con fibra de madera sobre panel estructural CLT",
+      "description": "ETICS de origen vegetal con fibra de madera sobre panel estructural CLT",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "partial",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "4.2.4",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "slot_vocabulary_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FVC010",
+          "label": "Sistema ETICS de aislamiento térmico de origen vegetal",
+          "variant": "CLT + fibra de madera 60 mm + acabado mineral a la cal",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/FV_Fachadas_ETICS_con_aislamiento/FVC_Revestimiento_continuo_mineral/FVC010_Sistema_ETICS_de_aislamiento_termic.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 180.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Estuco de mortero de cal"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "wood_fibre",
+            "product_family": "wood_fibre_board",
+            "source_material_name_es": "Fibra de madera",
+            "thickness": 60,
+            "thermal_resistance": 1.54,
+            "thermal_conductivity": 0.039,
+            "reaction_to_fire_euroclass": "E"
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "timber",
+            "product_family": "cross_laminated_timber",
+            "source_material_name_es": "Panel contralaminado de madera (CLT)",
+            "cte_type": "GEN",
+            "thickness": 120
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.521,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 159,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 5,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 40,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "not_assessable"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 45.94,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 157.28,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FVC010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/FV_Fachadas_ETICS_con_aislamiento/FVC_Revestimiento_continuo_mineral/FVC010_Sistema_ETICS_de_aislamiento_termic.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt28mab060L",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Perfil de arranque aluminio 60 mm",
+            "unit": "m",
+            "quantity_per_fu": 0.25,
+            "unit_price": 5.74,
+            "amount": 1.44,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28mab070d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Taco expansión plástico con clavo metálico",
+            "unit": "Ud",
+            "quantity_per_fu": 0.8,
+            "unit_price": 0.3,
+            "amount": 0.24,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt16bab070wa",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Panel aislante fibra de madera 60 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 23.08,
+            "amount": 24.23,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt16bab020b",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Espiga especial para madera 6x100 mm",
+            "unit": "Ud",
+            "quantity_per_fu": 10,
+            "unit_price": 0.63,
+            "amount": 6.3,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt15sbi170d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Masilla elastómera monocomponente",
+            "unit": "Ud",
+            "quantity_per_fu": 0.17,
+            "unit_price": 3.22,
+            "amount": 0.55,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28mif030a",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Mortero de cal GP CSIII W2",
+            "unit": "kg",
+            "quantity_per_fu": 10,
+            "unit_price": 0.66,
+            "amount": 6.6,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28mab020d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Malla fibra vidrio antiálcalis",
+            "unit": "m2",
+            "quantity_per_fu": 1.1,
+            "unit_price": 1.57,
+            "amount": 1.73,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28mab090d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Perfil PVC con malla para goterón",
+            "unit": "m",
+            "quantity_per_fu": 0.17,
+            "unit_price": 4.48,
+            "amount": 0.76,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28mab080d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Perfil esquina PVC con malla",
+            "unit": "m",
+            "quantity_per_fu": 0.7,
+            "unit_price": 3.48,
+            "amount": 2.44,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt28esp020d",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Mortero de cal CR CSI W0 acabado",
+            "unit": "kg",
+            "quantity_per_fu": 1,
+            "unit_price": 0.68,
+            "amount": 0.68,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mt15sbi160g",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Cinta sellado autoexpansiva",
+            "unit": "m",
+            "quantity_per_fu": 1,
+            "unit_price": 1.05,
+            "amount": 1.05,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo054",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Oficial 1ª montador de aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.101,
+            "unit_price": 25.52,
+            "amount": 2.58,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo101",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Ayudante montador de aislamientos",
+            "unit": "h",
+            "quantity_per_fu": 0.101,
+            "unit_price": 23.59,
+            "amount": 2.38,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo039",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Oficial 1ª revocador",
+            "unit": "h",
+            "quantity_per_fu": 0.605,
+            "unit_price": 24.83,
+            "amount": 15.02,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo079",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Ayudante revocador",
+            "unit": "h",
+            "quantity_per_fu": 0.605,
+            "unit_price": 23.59,
+            "amount": 14.27,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FVC010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 80.27,
+            "amount": 1.61,
+            "slot": "RE",
+            "is_industrialized": false
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FVC010",
+            "unit_cost": 81.88,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ETICS_layer_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/FV_Fachadas_ETICS_con_aislamiento/FVC_Revestimiento_continuo_mineral/FVC010_Sistema_ETICS_de_aislamiento_termic.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 35.7,
+        "unit": "%",
+        "industrialized_cost": 56.15,
+        "total_direct_cost": 157.28,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.564,
+        "environmental_performance": 0.617,
+        "economic_performance": 0.586,
+        "industrialization": 0.357,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-005-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-005.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-ETI-006",
+      "name_es": "Fachada ETICS de origen vegetal con corcho natural expandido sobre panel estructural CLT",
+      "description": "ETICS de origen vegetal con corcho natural expandido sobre panel estructural CLT",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.4",
+          "code": "F 4.1",
+          "mapping": "partial",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "4.2.4",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "slot_vocabulary_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FVC010",
+          "label": "Sistema ETICS de aislamiento térmico de origen vegetal",
+          "variant": "CLT + corcho natural expandido 60 mm + acabado mineral a la cal",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/FV_Fachadas_ETICS_con_aislamiento/FVC_Revestimiento_continuo_mineral/FVC010_Sistema_ETICS_de_aislamiento_termic.html",
+          "role": "primary",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ETICS_layer_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 180.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ETICS_render",
+            "product_family": "etics_finish_system",
+            "source_material_name_es": "Revestimiento exterior continuo ETICS",
+            "finish": "Revestimiento mineral a la cal"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "cork",
+            "product_family": "expanded_cork_board",
+            "source_material_name_es": "Aglomerado de corcho natural expandido",
+            "thickness": 60
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "timber",
+            "product_family": "cross_laminated_timber",
+            "source_material_name_es": "Panel contralaminado de madera (CLT)",
+            "cte_type": "GEN",
+            "thickness": 120
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.51,
+          "unit": "W/m2K",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 170,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 44,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 41,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "not_assessable"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 44.31,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 164.2,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FVC010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/FV_Fachadas_ETICS_con_aislamiento/FVC_Revestimiento_continuo_mineral/FVC010_Sistema_ETICS_de_aislamiento_termic.html"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 27.8,
+        "unit": "%",
+        "industrialized_cost": 45.65,
+        "total_direct_cost": 164.2,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.576,
+        "environmental_performance": 0.631,
+        "economic_performance": 0.568,
+        "industrialization": 0.278,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-ETI-006-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-ETI-006.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

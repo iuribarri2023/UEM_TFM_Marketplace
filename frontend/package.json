@@ -1,0 +1,41 @@
+{
+  "name": "avra-viva-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve viva-web --proxy-config apps/viva-web/proxy.conf.json",
+    "build": "ng build viva-web",
+    "watch": "ng build viva-web --watch --configuration development",
+    "test": "ng test viva-web --watch=false",
+    "test:packages": "vitest run --dir packages",
+    "test:all": "npm run test && npm run test:packages"
+  },
+  "dependencies": {
+    "@angular/common": "22.1.5",
+    "@angular/compiler": "22.1.5",
+    "@angular/core": "22.1.5",
+    "@angular/forms": "22.1.5",
+    "@angular/platform-browser": "22.1.5",
+    "@angular/router": "22.1.5",
+    "@thatopen/components": "3.4.8",
+    "@thatopen/components-front": "3.4.4",
+    "@thatopen/fragments": "3.4.7",
+    "camera-controls": "3.1.2",
+    "rxjs": "7.8.2",
+    "three": "0.182.0",
+    "tslib": "2.8.1",
+    "web-ifc": "0.0.77"
+  },
+  "devDependencies": {
+    "@angular/build": "22.1.7",
+    "@angular/cli": "22.1.7",
+    "@angular/compiler-cli": "22.1.5",
+    "@types/three": "0.182.0",
+    "jsdom": "28.0.0",
+    "prettier": "3.8.1",
+    "typescript": "6.0.2",
+    "vitest": "4.0.8"
+  }
+}

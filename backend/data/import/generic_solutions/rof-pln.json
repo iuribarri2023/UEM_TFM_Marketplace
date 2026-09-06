@@ -1,0 +1,1828 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-ROF-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "ROF",
+    "name_es": "Cubiertas",
+    "description": "Subsistema AVRA: Cubiertas."
+  },
+  "archetype": {
+    "code": "ROF-PLN",
+    "name_es": "Cubierta plana no transitable",
+    "description": "Arquetipo AVRA: Cubierta plana no transitable."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-ROF-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_file": "rof-pln_mapping(1).json",
+    "template_structure": "full_example.json",
+    "generated_on": "2026-09-03",
+    "primary_source": "IVE-BDC BDC26",
+    "retrieval_policy": "Do not invent source-dependent numeric values; preserve inaccessible current IVE values as null with explicit status.",
+    "source_retrieval": {
+      "IVE-BDC": {
+        "status": "partial",
+        "note": "Terminal BDC26 URLs are reachable, but selected price, BC3 decomposition and GWP values are dynamically rendered and were not exposed to the web crawler."
+      },
+      "CTE-CEC": {
+        "status": "retrieved",
+        "note": "Used for roof slot semantics and reference U-value equations."
+      },
+      "CYPE": {
+        "status": "retrieved_when_mapped",
+        "note": "CYPE prices are stored only as secondary observations when configuration/scope differs from the IVE primary solution."
+      }
+    },
+    "gwp_policy": "IVE BDC displays A1-A2-A3 GWP-tot, but no selected-solution GWP was transferred unless directly retrievable.",
+    "cost_scope_note": "IVE roof items are treated as build-up above the structural support; the generic 200 mm RC slab is not included in canonical IVE cost/GWP.",
+    "cte_u_limits_roof_W_m2K": {
+      "A": 0.5,
+      "B": 0.44,
+      "C": 0.4,
+      "D": 0.35,
+      "E": 0.33
+    },
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "ROF-PLN-001",
+      "name_es": "Cubierta plana convencional no transitable con grava, lana mineral e impermeabilización bituminosa monocapa no adherida",
+      "description": "Cubierta plana convencional no transitable con grava, lana mineral e impermeabilización bituminosa monocapa no adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 5.8",
+          "section": "4.1.5",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN20aaaa",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 5.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN20$",
+          "selector": "aaaa",
+          "code": "EQAN20aaaa",
+          "label": "Cubierta convencional, impermeabilización no adherida, protección de grava; MW 0.039/40 + LBM-40 + sin barrera de vapor + hormigón celular",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN20$/aaaa",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "conventional",
+        "ventilation": "unventilated",
+        "total_thickness": 290.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "gravel",
+            "material_label_es": "Grava",
+            "thickness": 50,
+            "note": "Espesor a obtener de la partida IVE BDC26."
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora antipunzonante bajo protección",
+          "role": "separation_protection",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Lámina bituminosa",
+            "system": "monocapa",
+            "designation": "LBM-40",
+            "installation": "no_adherida"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "material_label_es": "Lana mineral",
+            "thickness": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "cellular_concrete",
+            "material_label_es": "Hormigón celular",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.738,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 5.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.33 + R_AT)",
+            "insulation_thickness_mm": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.026,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Lámina bituminosa",
+            "system": "monocapa",
+            "designation": "LBM-40",
+            "installation": "no_adherida"
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN20aaaa"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 386,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 57,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 49,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 142,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN20aaaa",
+            "url": "https://bdc.five.es/BDC26/1/EQAN20$/aaaa",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "IVE_BDC26_exposes_GWP_but_selected_terminal_value_not_machine_retrieved"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 210,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN20aaaa",
+          "url": "https://bdc.five.es/BDC26/1/EQAN20$/aaaa"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "current_IVE_BDC26_price_and_BC3_not_machine_retrieved",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost."
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 14.4,
+        "unit": "%",
+        "industrialized_cost": 30.24,
+        "total_direct_cost": 210.0,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.5,
+        "environmental_performance": 0.8,
+        "economic_performance": 0.4,
+        "industrialization": 0.7,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-PLN-002",
+      "name_es": "Cubierta plana convencional no transitable con grava, lana mineral, barrera de vapor e impermeabilización bituminosa bicapa adherida",
+      "description": "Cubierta plana convencional no transitable con grava, lana mineral, barrera de vapor e impermeabilización bituminosa bicapa adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 5.8",
+          "section": "4.1.5",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN21bdbb",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 5.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN21$",
+          "selector": "bdbb",
+          "code": "EQAN21bdbb",
+          "label": "Cubierta convencional, impermeabilización adherida, protección de grava; MW 0.039/40 + LBM-30+LBM-30 + barrera de vapor + hormigón de arcilla expandida",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN21$/bdbb",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "conventional",
+        "ventilation": "unventilated",
+        "total_thickness": 290.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "gravel",
+            "material_label_es": "Grava",
+            "thickness": 50,
+            "note": "Espesor a obtener de la partida IVE BDC26."
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora antipunzonante bajo protección",
+          "role": "separation_protection",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Lámina bituminosa",
+            "system": "bicapa",
+            "layers": [
+              "LBM-30",
+              "LBM-30"
+            ],
+            "installation": "adherida"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "material_label_es": "Lana mineral",
+            "thickness": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        {
+          "key": "B",
+          "name_es": "Barrera contra el vapor",
+          "role": "vapour_barrier",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "barrera_contra_el_vapor",
+            "material_label_es": "Barrera contra el vapor",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "expanded_clay_concrete",
+            "material_label_es": "Hormigón de arcilla expandida",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.738,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 5.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.33 + R_AT)",
+            "insulation_thickness_mm": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.026,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Lámina bituminosa",
+            "system": "bicapa",
+            "installation": "adherida",
+            "layers": [
+              "LBM-30",
+              "LBM-30"
+            ]
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN21bdbb"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 422,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 51,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 49,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 121.57,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN21bdbb",
+            "url": "https://bdc.five.es/BDC26/1/EQAN21$/bdbb",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 115.08,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN21bdbb",
+          "url": "https://bdc.five.es/BDC26/1/EQAN21$/bdbb"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 22.8,
+        "unit": "%",
+        "industrialized_cost": 26.24,
+        "total_direct_cost": 115.08,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.095,
+        "environmental_performance": 0.36,
+        "economic_performance": 0.68,
+        "industrialization": 0.228,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-PLN-003",
+      "name_es": "Cubierta plana invertida no transitable con grava, XPS e impermeabilización bituminosa bicapa no adherida",
+      "description": "Cubierta plana invertida no transitable con grava, XPS e impermeabilización bituminosa bicapa no adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 5.8",
+          "section": "4.1.5",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN22cda",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 5.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN22$",
+          "selector": "cda",
+          "code": "EQAN22cda",
+          "label": "Cubierta invertida, impermeabilización no adherida, protección de grava; XPS 0.027/40 + LBM-30+LBM-30 + hormigón celular",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN22$/cda",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "inverted",
+        "ventilation": "unventilated",
+        "total_thickness": 290.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "gravel",
+            "material_label_es": "Grava",
+            "thickness": 50,
+            "note": "Espesor a obtener de la partida IVE BDC26."
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora antipunzonante bajo protección",
+          "role": "separation_protection",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "XPS",
+            "material_label_es": "Poliestireno extruido (XPS)",
+            "thickness": 40,
+            "thermal_conductivity": 0.027,
+            "thermal_resistance": 1.481
+          }
+        },
+        {
+          "key": "Cs",
+          "name_es": "Capa separadora",
+          "role": "separation_layer",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora",
+            "material_label_es": "Capa separadora",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Lámina bituminosa",
+            "system": "bicapa",
+            "layers": [
+              "LBM-30",
+              "LBM-30"
+            ],
+            "installation": "no_adherida"
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "cellular_concrete",
+            "material_label_es": "Hormigón celular",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.552,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 5.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.33 + R_AT)",
+            "insulation_thickness_mm": 40,
+            "thermal_conductivity": 0.027,
+            "thermal_resistance": 1.481
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.481,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Lámina bituminosa",
+            "system": "bicapa",
+            "installation": "no_adherida",
+            "layers": [
+              "LBM-30",
+              "LBM-30"
+            ]
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN22cda"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 387,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 55,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 49,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 129.79,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN22cda",
+            "url": "https://bdc.five.es/BDC26/1/EQAN22$/cda",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 135.68,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN22cda",
+          "url": "https://bdc.five.es/BDC26/1/EQAN22$/cda"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 23.0,
+        "unit": "%",
+        "industrialized_cost": 31.21,
+        "total_direct_cost": 135.68,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.382,
+        "environmental_performance": 0.317,
+        "economic_performance": 0.623,
+        "industrialization": 0.23,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-PLN-004",
+      "name_es": "Cubierta plana invertida no transitable con grava, XPS e impermeabilización sintética EPDM no adherida",
+      "description": "Cubierta plana invertida no transitable con grava, XPS e impermeabilización sintética EPDM no adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 5.8",
+          "section": "4.1.5",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN22ffb",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 5.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN22$",
+          "selector": "ffb",
+          "code": "EQAN22ffb",
+          "label": "Cubierta invertida, impermeabilización no adherida, protección de grava; XPS 0.027/80 + EPDM 1.5 mm + hormigón de arcilla expandida",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN22$/ffb",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "inverted",
+        "ventilation": "unventilated",
+        "total_thickness": 331.5,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "P",
+          "name_es": "Capa de protección",
+          "role": "protection",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "gravel",
+            "material_label_es": "Grava",
+            "thickness": 50,
+            "note": "Espesor a obtener de la partida IVE BDC26."
+          }
+        },
+        {
+          "key": "Csa",
+          "name_es": "Capa separadora antipunzonante bajo protección",
+          "role": "separation_protection",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "geotextile",
+            "material_label_es": "Geotextil",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "XPS",
+            "material_label_es": "Poliestireno extruido (XPS)",
+            "thickness": 80,
+            "thermal_conductivity": 0.027,
+            "thermal_resistance": 2.963
+          }
+        },
+        {
+          "key": "Cs",
+          "name_es": "Capa separadora",
+          "role": "separation_layer",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "capa_separadora",
+            "material_label_es": "Capa separadora",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "EPDM",
+            "material_label_es": "EPDM",
+            "system": "monocapa",
+            "thickness": 1.5,
+            "installation": "no_adherida"
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "expanded_clay_concrete",
+            "material_label_es": "Hormigón de arcilla expandida",
+            "slope_percent": "1-5"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 70,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.304,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 5.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.33 + R_AT)",
+            "insulation_thickness_mm": 80,
+            "thermal_conductivity": 0.027,
+            "thermal_resistance": 2.963
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 2.963,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "EPDM",
+            "system": "monocapa",
+            "installation": "no_adherida",
+            "thickness_mm": 1.5
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN22ffb"
+          }
+        },
+        "slope": {
+          "value": "1-5",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 460,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 57,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 46,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 84.11,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN22ffb",
+            "url": "https://bdc.five.es/BDC26/1/EQAN22$/ffb",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 144.66,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN22ffb",
+          "url": "https://bdc.five.es/BDC26/1/EQAN22$/ffb"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 16.1,
+        "unit": "%",
+        "industrialized_cost": 23.29,
+        "total_direct_cost": 144.66,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.763,
+        "environmental_performance": 0.557,
+        "economic_performance": 0.598,
+        "industrialization": 0.161,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-PLN-005",
+      "name_es": "Cubierta plana convencional no transitable autoprotegida con lana mineral e impermeabilización bituminosa SBS monocapa adherida",
+      "description": "Cubierta plana convencional no transitable autoprotegida con lana mineral e impermeabilización bituminosa SBS monocapa adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 6.8",
+          "section": "4.1.6",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN24baaa",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 6.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN24$",
+          "selector": "baaa",
+          "code": "EQAN24baaa",
+          "label": "Cubierta convencional autoprotegida adherida; MW 0.039/40 + LBM-50/G + sin barrera de vapor + hormigón celular",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN24$/baaa",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "conventional",
+        "ventilation": "unventilated",
+        "total_thickness": 240.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Lámina bituminosa autoprotegida",
+            "system": "monocapa",
+            "designation": "LBM-50/G",
+            "installation": "adherida"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "material_label_es": "Lana mineral",
+            "thickness": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "cellular_concrete",
+            "material_label_es": "Hormigón celular",
+            "slope_percent": "1-15"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.749,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 6.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.31 + R_AT)",
+            "insulation_thickness_mm": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.026,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Lámina bituminosa autoprotegida",
+            "system": "monocapa",
+            "designation": "LBM-50/G",
+            "installation": "adherida"
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN24baaa"
+          }
+        },
+        "slope": {
+          "value": "1-15",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 454,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 52,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 50,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 115.24,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN24baaa",
+            "url": "https://bdc.five.es/BDC26/1/EQAN24$/baaa",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 198.65,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN24baaa",
+          "url": "https://bdc.five.es/BDC26/1/EQAN24$/baaa"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 22.1,
+        "unit": "%",
+        "industrialized_cost": 43.9,
+        "total_direct_cost": 198.65,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.078,
+        "environmental_performance": 0.393,
+        "economic_performance": 0.448,
+        "industrialization": 0.221,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-005-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-005.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "ROF-PLN-006",
+      "name_es": "Cubierta plana convencional no transitable autoprotegida con lana mineral, barrera de vapor e impermeabilización bituminosa SBS bicapa adherida",
+      "description": "Cubierta plana convencional no transitable autoprotegida con lana mineral, barrera de vapor e impermeabilización bituminosa SBS bicapa adherida",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "code": "C 6.8",
+          "section": "4.1.6",
+          "mapping": "equivalent"
+        },
+        {
+          "scheme": "IVE-BDC",
+          "version": "BDC26",
+          "code": "EQAN24bcbb",
+          "mapping": "source_solution",
+          "section": "4.1.5",
+          "status": "synthetic_poc_estimate"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "C 6.8",
+          "role": "technical_reference",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "retrieval_status": "technical_reference_retrieved"
+        },
+        {
+          "dataset": "IVE-BDC",
+          "family": "EQAN24$",
+          "selector": "bcbb",
+          "code": "EQAN24bcbb",
+          "label": "Cubierta convencional autoprotegida adherida; MW 0.039/40 + LBM-30+LBM-40/G + barrera de vapor + hormigón de arcilla expandida",
+          "role": "primary",
+          "scope": "roof_build_up_above_structural_support",
+          "url": "https://bdc.five.es/BDC26/1/EQAN24$/bcbb",
+          "retrieval_status": "terminal_url_reachable_dynamic_values_not_extracted"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "is_thermal_envelope": true,
+        "roof_type": "conventional",
+        "ventilation": "unventilated",
+        "total_thickness": 240.0,
+        "structural_support_included_in_source_cost": false,
+        "trafficability": "non_trafficable",
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "I",
+          "name_es": "Capa de impermeabilización",
+          "role": "waterproofing",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "bituminous_membrane",
+            "material_label_es": "Lámina bituminosa autoprotegida",
+            "system": "bicapa",
+            "layers": [
+              "LBM-30",
+              "LBM-40/G"
+            ],
+            "installation": "adherida"
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislante",
+          "role": "thermal_insulation",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "material_label_es": "Lana mineral",
+            "thickness": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        {
+          "key": "B",
+          "name_es": "Barrera contra el vapor",
+          "role": "vapour_barrier",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "barrera_contra_el_vapor",
+            "material_label_es": "Barrera contra el vapor",
+            "source_specification_pending": true
+          }
+        },
+        {
+          "key": "FP",
+          "name_es": "Formación de pendientes",
+          "role": "slope_formation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "expanded_clay_concrete",
+            "material_label_es": "Hormigón de arcilla expandida",
+            "slope_percent": "1-15"
+          }
+        },
+        {
+          "key": "SR",
+          "name_es": "Soporte resistente",
+          "role": "structural_support",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "cte_type": "L",
+            "material_family": "reinforced_concrete_slab",
+            "material_label_es": "Losa de hormigón armado",
+            "thickness": 200,
+            "source_scope": "AVRA_generic_support_not_in_IVE_EQAN_item"
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.749,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "C 6.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.31 + R_AT)",
+            "insulation_thickness_mm": 40,
+            "thermal_conductivity": 0.039,
+            "thermal_resistance": 1.026
+          }
+        },
+        "insulation_thermal_resistance": {
+          "value": 1.026,
+          "unit": "m2K/W",
+          "status": "calculated_from_mapping"
+        },
+        "waterproofing_system": {
+          "value": {
+            "material": "Lámina bituminosa autoprotegida",
+            "system": "bicapa",
+            "installation": "adherida",
+            "layers": [
+              "LBM-30",
+              "LBM-40/G"
+            ]
+          },
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN24bcbb"
+          }
+        },
+        "slope": {
+          "value": "1-15",
+          "unit": "%",
+          "source": {
+            "dataset": "mapping_and_IVE_selector"
+          }
+        },
+        "surface_mass": {
+          "value": 397,
+          "unit": "kg/m2",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "REI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 51,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 51,
+          "unit": "dBA",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "element_type": "roof_in_contact_with_external_air",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "limits": {
+            "A": 0.5,
+            "B": 0.44,
+            "C": 0.4,
+            "D": 0.35,
+            "E": 0.33
+          },
+          "status": "evaluated_from_CTE_CEC_proxy"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 95.69,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 0
+          },
+          "observations": [],
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EQAN24bcbb",
+            "url": "https://bdc.five.es/BDC26/1/EQAN24$/bcbb",
+            "indicator": "GWP-tot",
+            "modules": [
+              "A1",
+              "A2",
+              "A3"
+            ]
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 212.82,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EQAN24bcbb",
+          "url": "https://bdc.five.es/BDC26/1/EQAN24$/bcbb"
+        },
+        "scope": "roof_build_up_above_structural_support",
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "observed_decompositions": [],
+        "status": "synthetic_poc_estimate",
+        "note": "Secondary/external observations are preserved but not promoted to canonical current IVE cost.",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 22.4,
+        "unit": "%",
+        "industrialized_cost": 47.67,
+        "total_direct_cost": 212.82,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "assessment_hint": "conventional_in_situ_roof_build_up_expected",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.078,
+        "environmental_performance": 0.496,
+        "economic_performance": 0.409,
+        "industrialization": 0.224,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "ROF-PLN-006-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/ROF-PLN-006.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

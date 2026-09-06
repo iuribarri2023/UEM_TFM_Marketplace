@@ -1,0 +1,566 @@
+openapi: 3.1.0
+info:
+  title: AVRA VIVA Marketplace API
+  version: 0.2.0
+  description: Backend REST contract. Import workflows are administrative CLI operations and are documented separately.
+servers:
+  - url: /
+tags:
+  - name: Health
+  - name: Catalogue
+  - name: Auth
+  - name: Manufacturer
+  - name: Admin
+  - name: Marketplace
+  - name: Assets
+paths:
+  /:
+    get:
+      tags: [Health]
+      summary: Redirect to Swagger UI
+      responses:
+        '302':
+          description: Redirects to /docs
+  /docs:
+    get:
+      tags: [Health]
+      summary: Interactive Swagger UI
+      responses:
+        '200':
+          description: Swagger UI HTML
+          content:
+            text/html:
+              schema: { type: string }
+  /openapi.yaml:
+    get:
+      tags: [Health]
+      summary: OpenAPI YAML contract
+      responses:
+        '200':
+          description: OpenAPI document
+          content:
+            application/yaml:
+              schema: { type: string }
+  /health:
+    get:
+      tags: [Health]
+      summary: Liveness check
+      responses:
+        '200':
+          description: Application process is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, const: ok }
+  /api/v1/systems:
+    get:
+      tags: [Catalogue]
+      summary: List systems
+      responses:
+        '200': { $ref: '#/components/responses/SystemList' }
+  /api/v1/systems/{id}:
+    get:
+      tags: [Catalogue]
+      summary: Get system
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { $ref: '#/components/responses/SystemItem' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/systems/by-code/{code}:
+    get:
+      tags: [Catalogue]
+      summary: Get system by functional code
+      parameters: [ { $ref: '#/components/parameters/Code' } ]
+      responses:
+        '200': { $ref: '#/components/responses/SystemItem' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/subsystems:
+    get:
+      tags: [Catalogue]
+      summary: List subsystems
+      parameters:
+        - name: system_id
+          in: query
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Success }
+  /api/v1/subsystems/{id}:
+    get:
+      tags: [Catalogue]
+      summary: Get subsystem
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/subsystems/by-code/{code}:
+    get:
+      tags: [Catalogue]
+      summary: Get subsystem by functional code
+      parameters: [ { $ref: '#/components/parameters/Code' } ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Subsystem' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/archetypes:
+    get:
+      tags: [Catalogue]
+      summary: List archetypes
+      parameters:
+        - name: subsystem_id
+          in: query
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Success }
+  /api/v1/archetypes/{id}:
+    get:
+      tags: [Catalogue]
+      summary: Get archetype
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/archetypes/by-code/{code}:
+    get:
+      tags: [Catalogue]
+      summary: Get archetype by functional code
+      parameters: [ { $ref: '#/components/parameters/Code' } ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Archetype' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/generic-solutions:
+    get:
+      tags: [Catalogue]
+      summary: List generic solutions
+      parameters:
+        - name: archetype_id
+          in: query
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Success }
+  /api/v1/generic-solutions/by-code/{code}:
+    get:
+      tags: [Catalogue]
+      summary: Get a generic solution by functional code with Slots and Assets
+      parameters: [ { $ref: '#/components/parameters/Code' } ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/GenericSolution' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/generic-solutions/{id}:
+    get:
+      tags: [Catalogue]
+      summary: Get a generic solution with Slots and Assets
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/GenericSolution' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/manufacturers:
+    get:
+      tags: [Marketplace]
+      summary: List active manufacturers
+      responses:
+        '200': { description: Success }
+  /api/v1/manufacturers/{id}:
+    get:
+      tags: [Marketplace]
+      summary: Get active manufacturer
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate and issue token pair
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+      responses:
+        '200': { description: Authenticated }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh token pair
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token: { type: string }
+      responses:
+        '200': { description: Refreshed }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/auth/me:
+    get:
+      tags: [Auth]
+      summary: Get authenticated user
+      security: [ { bearerAuth: [] } ]
+      responses:
+        '200': { description: Success }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/manufacturer/commercial-solutions:
+    get:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: List own commercial solutions
+      responses:
+        '200': { description: Success }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: Create a DRAFT commercial solution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CommercialSolutionWrite' }
+      responses:
+        '201': { description: Created }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/v1/manufacturer/commercial-solutions/{id}:
+    get:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: Get own commercial solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    patch:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: Update own solution; approved/rejected edits return it to DRAFT
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CommercialSolutionPatch' }
+      responses:
+        '200': { description: Updated }
+        '409': { $ref: '#/components/responses/Conflict' }
+    delete:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: Delete an own DRAFT/REJECTED solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '204': { description: Deleted }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/v1/manufacturer/commercial-solutions/{id}/submit:
+    post:
+      tags: [Manufacturer]
+      security: [ { bearerAuth: [] } ]
+      summary: Submit solution for review; requires a valid IFC
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Submitted }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/v1/manufacturer/commercial-solutions/{id}/assets:
+    get:
+      tags: [Assets]
+      security: [ { bearerAuth: [] } ]
+      summary: List assets for own solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+    post:
+      tags: [Assets]
+      security: [ { bearerAuth: [] } ]
+      summary: Upload asset to DRAFT/REJECTED solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary }
+                code: { type: string }
+                role: { type: string }
+                asset_type: { type: string }
+      responses:
+        '201': { description: Created }
+  /api/v1/manufacturer/commercial-solutions/{id}/assets/{asset_id}:
+    delete:
+      tags: [Assets]
+      security: [ { bearerAuth: [] } ]
+      summary: Delete asset from DRAFT/REJECTED solution
+      parameters:
+        - { $ref: '#/components/parameters/Id' }
+        - name: asset_id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204': { description: Deleted }
+  /api/v1/assets/{id}/download:
+    get:
+      tags: [Assets]
+      summary: Download an authorized/public asset
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: File stream }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/v1/admin/commercial-solutions/submitted:
+    get:
+      tags: [Admin]
+      security: [ { bearerAuth: [] } ]
+      summary: List submitted solutions
+      responses:
+        '200': { description: Success }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/v1/admin/commercial-solutions/{id}/approve:
+    post:
+      tags: [Admin]
+      security: [ { bearerAuth: [] } ]
+      summary: Approve submitted solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Approved }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/v1/admin/commercial-solutions/{id}/reject:
+    post:
+      tags: [Admin]
+      security: [ { bearerAuth: [] } ]
+      summary: Reject submitted solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: { type: string, minLength: 1, maxLength: 2000 }
+      responses:
+        '200': { description: Rejected }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/v1/marketplace/commercial-solutions:
+    get:
+      tags: [Marketplace]
+      summary: List APPROVED commercial solutions
+      parameters:
+        - { name: generic_solution_id, in: query, schema: { type: string, format: uuid } }
+        - { name: archetype_id, in: query, schema: { type: string, format: uuid } }
+        - { name: subsystem_id, in: query, schema: { type: string, format: uuid } }
+        - { name: system_id, in: query, schema: { type: string, format: uuid } }
+        - { name: manufacturer_id, in: query, schema: { type: string, format: uuid } }
+      responses:
+        '200': { description: Success }
+  /api/v1/marketplace/commercial-solutions/{id}:
+    get:
+      tags: [Marketplace]
+      summary: Get APPROVED commercial solution
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Success }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    Code:
+      name: code
+      in: path
+      required: true
+      schema: { type: string }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+    System:
+      type: object
+      required: [id, code, name_es, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        name_es: { type: string }
+        description: { type: [string, 'null'] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    Subsystem:
+      type: object
+      required: [id, system_id, code, name_es, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        system_id: { type: string, format: uuid }
+        code: { type: string }
+        name_es: { type: string }
+        description: { type: [string, 'null'] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    Archetype:
+      type: object
+      required: [id, subsystem_id, code, name_es, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        subsystem_id: { type: string, format: uuid }
+        code: { type: string }
+        name_es: { type: string }
+        description: { type: [string, 'null'] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    Asset:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: [string, 'null'] }
+        original_filename: { type: string }
+        mime_type: { type: string }
+        size: { type: integer }
+        sha256: { type: string }
+        asset_type: { type: string }
+        format: { type: string }
+        role: { type: string }
+        validation_data: { type: [object, 'null'], additionalProperties: true }
+        extraction_data: { type: [object, 'null'], additionalProperties: true }
+    Slot:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        key: { type: string }
+        name_es: { type: string }
+        role: { type: [string, 'null'] }
+        sequence: { type: integer }
+        required: { type: boolean }
+        properties: { type: object, additionalProperties: true }
+        metrics: { type: [object, 'null'], additionalProperties: true }
+        source_reference: { type: [object, 'null'], additionalProperties: true }
+    GenericSolution:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        archetype_id: { type: string, format: uuid }
+        code: { type: string }
+        name_es: { type: string }
+        description: { type: [string, 'null'] }
+        functional_unit: { type: [string, 'null'] }
+        status: { type: [string, 'null'] }
+        classifications: { type: array, items: { type: object, additionalProperties: true } }
+        source_references: { type: array, items: { type: object, additionalProperties: true } }
+        attributes: { type: object, additionalProperties: true }
+        metrics: { type: object, additionalProperties: true }
+        cte_compliance: { type: object, additionalProperties: true }
+        environmental_data: { type: object, additionalProperties: true }
+        economic_data: { type: object, additionalProperties: true }
+        industrialization_data: { type: object, additionalProperties: true }
+        viva_metrics: { type: object, additionalProperties: true }
+        slots: { type: array, items: { $ref: '#/components/schemas/Slot' } }
+        assets: { type: array, items: { $ref: '#/components/schemas/Asset' } }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string }
+    CommercialSolutionWrite:
+      type: object
+      required: [generic_solution_id, code, name_es]
+      properties:
+        generic_solution_id: { type: string, format: uuid }
+        code: { type: string, maxLength: 64 }
+        name_es: { type: string, maxLength: 255 }
+        description: { type: [string, 'null'] }
+        technical_data: { type: object, additionalProperties: true }
+    CommercialSolutionPatch:
+      type: object
+      properties:
+        code: { type: string, maxLength: 64 }
+        name_es: { type: string, maxLength: 255 }
+        description: { type: [string, 'null'] }
+        technical_data: { type: object, additionalProperties: true }
+  responses:
+    SystemList:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: '#/components/schemas/System' }
+    SystemItem:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data: { $ref: '#/components/schemas/System' }
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Conflict:
+      description: Invalid workflow transition or conflicting state
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }

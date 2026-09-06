@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "manufacturer": {
+    "code": "MFR-ACME",
+    "name": "ACME Construction Systems",
+    "tax_id": "B00000000",
+    "website": "https://example.com",
+    "description": "Fabricante de ejemplo.",
+    "status": "ACTIVE"
+  },
+  "manufacturer_solutions": [
+    {
+      "generic_solution_code": "FAC-VEN-001",
+      "code": "ACME-FAC-VEN-001",
+      "name_es": "Sistema de fachada ventilada ACME",
+      "description": "Producto comercial asociado a FAC-VEN-001.",
+      "status": "DRAFT",
+      "technical_data": {
+        "manufacturer_product_code": "FV-100",
+        "thermal_transmittance": 0.42,
+        "thermal_transmittance_unit": "W/m2K",
+        "fire_rating": "EI60"
+      },
+      "assets": [
+        {
+          "id": "ACME-FAC-VEN-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_commercial_model",
+          "uri": "assets/ifc/manufacturer/ACME-FAC-VEN-001.ifc"
+        }
+      ]
+    }
+  ]
+}

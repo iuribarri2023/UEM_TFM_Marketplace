@@ -1,0 +1,225 @@
+{
+  "$defs": {
+    "AssetImport": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "IFC",
+            "PDF",
+            "PNG",
+            "JPG",
+            "JPEG",
+            "WEBP"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "role": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "uri": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "format",
+        "role",
+        "uri"
+      ],
+      "title": "AssetImport",
+      "type": "object"
+    },
+    "ManufacturerImport": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "tax_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tax Id"
+        },
+        "website": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Website"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "status": {
+          "default": "ACTIVE",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "name"
+      ],
+      "title": "ManufacturerImport",
+      "type": "object"
+    },
+    "ManufacturerSolutionImport": {
+      "additionalProperties": false,
+      "properties": {
+        "generic_solution_code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Generic Solution Code",
+          "type": "string"
+        },
+        "code": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "name_es": {
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Name Es",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "technical_data": {
+          "additionalProperties": true,
+          "title": "Technical Data",
+          "type": "object"
+        },
+        "status": {
+          "const": "DRAFT",
+          "default": "DRAFT",
+          "title": "Status",
+          "type": "string"
+        },
+        "assets": {
+          "contains": {
+            "properties": {
+              "format": {
+                "const": "IFC"
+              }
+            },
+            "required": [
+              "format"
+            ],
+            "type": "object"
+          },
+          "items": {
+            "$ref": "#/$defs/AssetImport"
+          },
+          "minItems": 1,
+          "title": "Assets",
+          "type": "array"
+        }
+      },
+      "required": [
+        "generic_solution_code",
+        "code",
+        "name_es",
+        "assets"
+      ],
+      "title": "ManufacturerSolutionImport",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "minLength": 1,
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "manufacturer": {
+      "$ref": "#/$defs/ManufacturerImport"
+    },
+    "manufacturer_solutions": {
+      "items": {
+        "$ref": "#/$defs/ManufacturerSolutionImport"
+      },
+      "minItems": 1,
+      "title": "Manufacturer Solutions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "manufacturer",
+    "manufacturer_solutions"
+  ],
+  "title": "ManufacturerSolutionsImport",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avra-viva.local/schemas/import/manufacturer_solutions.schema.json"
+}

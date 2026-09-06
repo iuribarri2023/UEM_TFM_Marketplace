@@ -1,0 +1,1929 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-FAC-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas",
+    "description": "Subsistema AVRA: Fachadas."
+  },
+  "archetype": {
+    "code": "FAC-VEN",
+    "name_es": "Fachada ventilada",
+    "description": "Arquetipo AVRA: Fachada ventilada."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-FAC-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_policy": "Mapping manifests define intended solution/source links; fetched source data takes precedence for source-dependent facts.",
+    "null_policy": "Unavailable or scope-incompatible source-dependent values remain null and include a status instead of being inferred from neighbouring variants.",
+    "economic_scope_policy": "A CYPE price is stored as the generic solution unit_cost only when the mapped CYPE unit substantially matches the defined GenericSolution scope. Otherwise it is kept as a source_observation.",
+    "environmental_policy": "GWP A1-A3 is populated only when the mapped source explicitly provides an assembly-level value.",
+    "notes": [
+      "All six GenericSolutions share the CTE-CEC F8.1 backing-wall concept. CYPE mapped records price only the exterior ventilated cladding/substructure, not the mineral wool, masonry backing leaf or interior finish.",
+      "CYPE cladding prices and their decompositions are preserved as partial-scope source observations; full-wall unit_cost remains null.",
+      "CTE F8.1 acoustic/mass/waterproofing values use the conservative R2 row. U remains unresolved because the mapping specifies 100 mm mineral wool but no thermal resistance/conductivity source.",
+      "No mapped source provides assembly-level GWP A1-A3."
+    ],
+    "code_corrections": [],
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-VEN-001",
+      "name_es": "Fachada ventilada con revestimiento cerámico extruido",
+      "description": "Fachada ventilada con revestimiento cerámico extruido",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAE010",
+          "label": "Sistema de placa cerámica extruida, para fachada ventilada",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAE_Sistemas_de_placas_de_ceramica/FAE010_Sistema_de_placa_ceramica_extruida_.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 286,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic",
+            "product_family": "extruded_ceramic_panel",
+            "source_material_name_es": "Placa cerámica extruida alveolar",
+            "thickness": 16,
+            "support_system": "Subestructura de aluminio con anclaje horizontal continuo oculto"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 76.19,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 195.45,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAE010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAE_Sistemas_de_placas_de_ceramica/FAE010_Sistema_de_placa_ceramica_extruida_.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12pcm010aa",
+            "parent_code": "FAE010",
+            "depth": 1,
+            "description": "Placa cerámica extruida alveolar 16 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 28.23,
+            "amount": 29.64,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pcm015a",
+            "parent_code": "FAE010",
+            "depth": 1,
+            "description": "Subestructura soporte de perfiles, anclajes y tornillería",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 24.25,
+            "amount": 24.25,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAE010",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.891,
+            "unit_price": 18.13,
+            "amount": 16.15,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAE010",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.891,
+            "unit_price": 16.43,
+            "amount": 14.64,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAE010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.03,
+            "unit_price": 84.68,
+            "amount": 2.54,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAE010",
+            "unit_cost": 87.22,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAE_Sistemas_de_placas_de_ceramica/FAE010_Sistema_de_placa_ceramica_extruida_.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 67.7,
+        "unit": "%",
+        "industrialized_cost": 132.32,
+        "total_direct_cost": 195.45,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.365,
+        "economic_performance": 0.486,
+        "industrialization": 0.677,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-001.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-VEN-002",
+      "name_es": "Fachada ventilada con revestimiento de gres porcelánico",
+      "description": "Fachada ventilada con revestimiento de gres porcelánico",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAG005",
+          "label": "Sistema de placas de gres porcelánico, para fachada ventilada",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAG_Sistemas_de_placas_de_gres_por/FAG005_Sistema_de_placas_de_gres_porcelani.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 280,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "porcelain_stoneware",
+            "product_family": "porcelain_cladding_panel",
+            "source_material_name_es": "Gres porcelánico",
+            "thickness": 10,
+            "support_system": "Subestructura de aluminio con sistema de anclaje visto"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 43.37,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 236.51,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAG005",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAG_Sistemas_de_placas_de_gres_por/FAG005_Sistema_de_placas_de_gres_porcelani.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt19pcf020haa",
+            "parent_code": "FAG005",
+            "depth": 1,
+            "description": "Placa de gres porcelánico",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 40.62,
+            "amount": 42.65,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt19agp100bc",
+            "parent_code": "FAG005",
+            "depth": 1,
+            "description": "Subestructura de aluminio",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 18.45,
+            "amount": 18.45,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAG005",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 1.204,
+            "unit_price": 19.11,
+            "amount": 23.01,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAG005",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 1.204,
+            "unit_price": 17.53,
+            "amount": 21.11,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAG005",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 105.22,
+            "amount": 2.1,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAG005",
+            "unit_cost": 107.32,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAG_Sistemas_de_placas_de_gres_por/FAG005_Sistema_de_placas_de_gres_porcelani.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 69.7,
+        "unit": "%",
+        "industrialized_cost": 164.85,
+        "total_direct_cost": 236.51,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.639,
+        "economic_performance": 0.378,
+        "industrialization": 0.697,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-VEN-003",
+      "name_es": "Fachada ventilada con revestimiento de piedra natural",
+      "description": "Fachada ventilada con revestimiento de piedra natural",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAP010",
+          "label": "Revestimiento exterior de fachada ventilada, con piezas de gran formato de piedra natural",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAP_Revestimiento_exterior_de_plac/FAP010_Revestimiento_exterior_de_fachada_v.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 300,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "natural_stone",
+            "product_family": "granite_cladding_panel",
+            "source_material_name_es": "Placa de granito",
+            "thickness": 30,
+            "support_system": "Subestructura regulable de aluminio con anclaje horizontal"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 52.19,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 172.26,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAP010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAP_Revestimiento_exterior_de_plac/FAP010_Revestimiento_exterior_de_fachada_v.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt18bgn010iaa",
+            "parent_code": "FAP010",
+            "depth": 1,
+            "description": "Placa de granito 60x40x3 cm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 68.13,
+            "amount": 68.13,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt19pag010cecc",
+            "parent_code": "FAP010",
+            "depth": 1,
+            "description": "Subestructura regulable de aluminio",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 31.14,
+            "amount": 31.14,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAP010",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 1.45,
+            "unit_price": 23.74,
+            "amount": 34.42,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAP010",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 1.45,
+            "unit_price": 21.94,
+            "amount": 31.81,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAP010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.03,
+            "unit_price": 165.5,
+            "amount": 4.97,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAP010",
+            "unit_cost": 170.47,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAP_Revestimiento_exterior_de_plac/FAP010_Revestimiento_exterior_de_fachada_v.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 68.9,
+        "unit": "%",
+        "industrialized_cost": 118.69,
+        "total_direct_cost": 172.26,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.565,
+        "economic_performance": 0.547,
+        "industrialization": 0.689,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-003.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-VEN-004",
+      "name_es": "Fachada ventilada con panel composite de aluminio",
+      "description": "Fachada ventilada con panel composite de aluminio",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAS005",
+          "label": "Sistema de panel composite, para fachada ventilada",
+          "url": "https://carm.generadordeprecios.info/rehabilitacion/Fachadas_y_particiones/Fachadas_ventiladas/Sistemas_de_paneles_composite/FAS005_Sistema_de_panel_composite__para_fa.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 274,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "aluminium_composite",
+            "product_family": "aluminium_composite_panel",
+            "source_material_name_es": "Panel composite de aluminio con núcleo mineral",
+            "thickness": 4,
+            "support_system": "Subestructura de perfiles de aluminio"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 81.24,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 176.94,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAS005",
+          "url": "https://carm.generadordeprecios.info/rehabilitacion/Fachadas_y_particiones/Fachadas_ventiladas/Sistemas_de_paneles_composite/FAS005_Sistema_de_panel_composite__para_fa.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12pra010aa",
+            "parent_code": "FAS005",
+            "depth": 1,
+            "description": "Panel composite de aluminio 4 mm con núcleo mineral",
+            "unit": "m2",
+            "quantity_per_fu": 1.05,
+            "unit_price": 45.52,
+            "amount": 47.8,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12pra100a",
+            "parent_code": "FAS005",
+            "depth": 1,
+            "description": "Subestructura de perfiles de aluminio",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 30.56,
+            "amount": 30.56,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAS005",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.928,
+            "unit_price": 18.23,
+            "amount": 16.92,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAS005",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.928,
+            "unit_price": 16.95,
+            "amount": 15.73,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAS005",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.03,
+            "unit_price": 111.01,
+            "amount": 3.33,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAS005",
+            "unit_cost": 114.34,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://carm.generadordeprecios.info/rehabilitacion/Fachadas_y_particiones/Fachadas_ventiladas/Sistemas_de_paneles_composite/FAS005_Sistema_de_panel_composite__para_fa.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 49.1,
+        "unit": "%",
+        "industrialized_cost": 86.88,
+        "total_direct_cost": 176.94,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.323,
+        "economic_performance": 0.534,
+        "industrialization": 0.491,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-VEN-005",
+      "name_es": "Fachada ventilada con placas laminadas compactas HPL",
+      "description": "Fachada ventilada con placas laminadas compactas HPL",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAA005",
+          "label": "Revestimiento exterior de fachada ventilada, de placas HPL",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAA_Revestimiento_exterior_de_plac/FAA005_Revestimiento_exterior_de_fachada_v.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 276,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "HPL",
+            "product_family": "high_pressure_laminate_panel",
+            "source_material_name_es": "Placa laminada compacta de alta presión (HPL)",
+            "thickness": 6,
+            "support_system": "Subestructura de aluminio con fijación vista mediante remaches"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 42.02,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 145.58,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAA005",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAA_Revestimiento_exterior_de_plac/FAA005_Revestimiento_exterior_de_fachada_v.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12prg010ihab",
+            "parent_code": "FAA005",
+            "depth": 1,
+            "description": "Placa laminada compacta HPL 6 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 62.79,
+            "amount": 62.79,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12prg020m",
+            "parent_code": "FAA005",
+            "depth": 1,
+            "description": "Subestructura de aluminio",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 38.71,
+            "amount": 38.71,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAA005",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.851,
+            "unit_price": 25.52,
+            "amount": 21.72,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAA005",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.851,
+            "unit_price": 23.59,
+            "amount": 20.08,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAA005",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.03,
+            "unit_price": 143.3,
+            "amount": 4.3,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAA005",
+            "unit_cost": 147.6,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAA_Revestimiento_exterior_de_plac/FAA005_Revestimiento_exterior_de_fachada_v.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 68.8,
+        "unit": "%",
+        "industrialized_cost": 100.16,
+        "total_direct_cost": 145.58,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.65,
+        "economic_performance": 0.617,
+        "industrialization": 0.688,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-005-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-005.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-VEN-006",
+      "name_es": "Fachada ventilada con lamas de fibrocemento",
+      "description": "Fachada ventilada con lamas de fibrocemento",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.8",
+          "code": "F 8.1",
+          "mapping": "equivalent"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "CTE-CEC",
+          "code": "F 8.1",
+          "url": "https://www.codigotecnico.org/pdf/Aplicaciones/CEC/CAT-EC-v06.3_marzo_10.pdf",
+          "role": "technical_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "technical_reference"
+        },
+        {
+          "dataset": "CYPE",
+          "code": "FAF010",
+          "label": "Revestimiento exterior de fachada ventilada, de lamas de fibrocemento sin amianto",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAF_Revestimiento_exterior_de_lama/FAF010_Revestimiento_exterior_de_fachada_v.html",
+          "role": "cladding_reference",
+          "retrieval_status": "fetched_or_mapping_verified",
+          "scope": "ventilated_cladding_and_substructure_only"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 280,
+        "total_thickness_basis": "sum_of_mapped_nominal_layers; substructure/cavity overlap not independently verified"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "fibre_cement",
+            "product_family": "fibre_cement_cladding",
+            "source_material_name_es": "Lama de fibrocemento sin amianto",
+            "thickness": 10,
+            "support_system": "Subestructura de madera con fijación oculta"
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ventilada",
+            "source_material_name_es": "Cámara de aire ventilada",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 100
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "ceramic_brick_masonry",
+            "source_material_name_es": "Fábrica de ladrillo cerámico",
+            "cte_type": "LC",
+            "thickness": 115
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "interior_render",
+            "product_family": "continuous_internal_finish",
+            "source_material_name_es": "Revestimiento interior continuo",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.322,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.47 + R_AT)"
+          },
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 156,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 39,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 8.1",
+            "section": "4.2.8",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "R_AT_not_resolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 54.86,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 194.18,
+        "source": {
+          "dataset": "CYPE",
+          "code": "FAF010",
+          "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAF_Revestimiento_exterior_de_lama/FAF010_Revestimiento_exterior_de_fachada_v.html"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "mt12lfc030c",
+            "parent_code": "FAF010",
+            "depth": 1,
+            "description": "Subestructura doble de rastreles de madera",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 17.6,
+            "amount": 17.6,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mt12lfc010ab",
+            "parent_code": "FAF010",
+            "depth": 1,
+            "description": "Lamas de fibrocemento sin amianto 10 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 32.96,
+            "amount": 32.96,
+            "slot": "RE",
+            "is_industrialized": true
+          },
+          {
+            "code": "mo052",
+            "parent_code": "FAF010",
+            "depth": 1,
+            "description": "Oficial 1ª montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.91,
+            "unit_price": 25.52,
+            "amount": 23.22,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "mo099",
+            "parent_code": "FAF010",
+            "depth": 1,
+            "description": "Ayudante montador de sistemas de fachadas prefabricadas",
+            "unit": "h",
+            "quantity_per_fu": 0.91,
+            "unit_price": 23.59,
+            "amount": 21.47,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "%",
+            "parent_code": "FAF010",
+            "depth": 1,
+            "description": "Costes directos complementarios",
+            "unit": "%",
+            "quantity_per_fu": 0.02,
+            "unit_price": 95.25,
+            "amount": 1.91,
+            "slot": "RE",
+            "is_industrialized": true
+          }
+        ],
+        "source_observations": [
+          {
+            "dataset": "CYPE",
+            "code": "FAF010",
+            "unit_cost": 97.16,
+            "currency": "EUR",
+            "functional_unit": "m2",
+            "scope": "ventilated_cladding_and_substructure_only",
+            "url": "https://www.generadordeprecios.info/obra_nueva/Fachadas_y_particiones/Fachadas_ventiladas/FAF_Revestimiento_exterior_de_lama/FAF010_Revestimiento_exterior_de_fachada_v.html"
+          }
+        ],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 56.1,
+        "unit": "%",
+        "industrialized_cost": 108.93,
+        "total_direct_cost": 194.18,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.798,
+        "environmental_performance": 0.543,
+        "economic_performance": 0.489,
+        "industrialization": 0.561,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-VEN-006-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-VEN-006.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}

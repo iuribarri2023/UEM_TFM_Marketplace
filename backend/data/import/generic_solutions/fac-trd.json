@@ -1,0 +1,1488 @@
+{
+  "schema_version": "1.2",
+  "data_template": "AVRA-DT-FAC-1.0",
+  "property_dictionary": "AVRA-DD-1.0",
+  "system": {
+    "code": "ENV",
+    "name_es": "Envolvente",
+    "description": "Sistema AVRA de elementos de la envolvente del edificio."
+  },
+  "subsystem": {
+    "code": "FAC",
+    "name_es": "Fachadas",
+    "description": "Subsistema AVRA: Fachadas."
+  },
+  "archetype": {
+    "code": "FAC-TRD",
+    "name_es": "Fachada tradicional",
+    "description": "Arquetipo AVRA: Fachada tradicional."
+  },
+  "regulatory_profile": "CTE-HE1-AND-v1",
+  "normalization_profile": "AVRA-NORM-FAC-v1",
+  "industrialization_profile": "AVRA-IDI-SOLUTION-v1",
+  "generation_provenance": {
+    "mapping_policy": "Mapping manifests define intended solution/source links; fetched source data takes precedence for source-dependent facts.",
+    "null_policy": "Unavailable or scope-incompatible source-dependent values remain null and include a status instead of being inferred from neighbouring variants.",
+    "economic_scope_policy": "A CYPE price is stored as the generic solution unit_cost only when the mapped CYPE unit substantially matches the defined GenericSolution scope. Otherwise it is kept as a source_observation.",
+    "environmental_policy": "GWP A1-A3 is populated only when the mapped source explicitly provides an assembly-level value.",
+    "notes": [
+      "IVE-BDC pages are client-rendered and could not be text-scraped directly. FAC-TRD-001 and FAC-TRD-003 are populated from source captures previously supplied in this project.",
+      "FAC-TRD-001 mapping stated XPS, but mapped IVE record EFCH11abeb explicitly uses EPS 0.036/40; source data takes precedence.",
+      "FAC-TRD-003 mapping duplicated the XPS/masonry composition, but mapped IVE record EFCH11hbac is BH15 + MW50 + dry lining; source data takes precedence.",
+      "Other exact IVE selectors returned no machine-readable technical/economic/environmental content, so their source-dependent values remain unresolved."
+    ],
+    "code_corrections": [],
+    "poc_synthetic_completion": {
+      "enabled": true,
+      "date": "2026-09-06",
+      "purpose": "database_and_api_demonstration_only",
+      "policy_override": "At the user request, unresolved/null values were completed with coherent synthetic estimates. Original source-dependent claims remain distinguishable through statuses and data_quality_notes.",
+      "ifc_note": "Referenced IFC files in this demo bundle are minimal synthetic IFC4 placeholders, not design BIM models."
+    }
+  },
+  "generic_solutions": [
+    {
+      "code": "FAC-TRD-001",
+      "name_es": "Fachada tradicional de bloque hueco de hormigón con aislamiento interior de EPS",
+      "description": "Cerramiento con hoja principal de bloque hueco de hormigón de 12,5 cm, enfoscado exterior CSIV-W2, cámara de aire, EPS de 40 mm, hoja interior de ladrillo hueco de 7 cm y acabado interior de yeso.",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "IVE-CEC",
+          "code": "FC11a01S36040",
+          "mapping": "source_solution",
+          "section": "4.2.5",
+          "status": "synthetic_poc_estimate"
+        },
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.5",
+          "code": "F 5.1",
+          "mapping": "candidate_from_mapping",
+          "status": "needs_review"
+        },
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.5",
+          "code": "F 5.3",
+          "mapping": "equivalent_source_based",
+          "status": "recommended_equivalence"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11abeb",
+          "label": "BH12.5+LH7+ENL+EPS-0.036/40",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/abeb",
+          "retrieval_status": "verified_from_supplied_source_capture"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 315
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior continuo",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "cement_render",
+            "product_family": "render_csiv_w2",
+            "thickness": 15
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "concrete_masonry",
+            "product_family": "hollow_concrete_block",
+            "nominal_dimensions": [
+              400,
+              200,
+              125
+            ],
+            "thickness": 125
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "ventilation_db_he": "slightly_ventilated",
+            "ventilation_db_hs": "unventilated",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "EPS",
+            "product_family": "expanded_polystyrene_board",
+            "hydrophilic": false,
+            "thickness": 40,
+            "thermal_conductivity": 0.036,
+            "thermal_resistance": 1.111
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "ceramic_masonry",
+            "product_family": "hollow_ceramic_brick",
+            "nominal_dimensions": [
+              240,
+              115,
+              70
+            ],
+            "thickness": 70
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 60,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_plaster",
+            "product_family": "gypsum_render",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.57,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb",
+            "reference": "CTE-DB-HE"
+          }
+        },
+        "surface_mass": {
+          "value": 231,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI90",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb",
+            "reference": "CTE-DB-SI"
+          }
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 47,
+          "unit": "dBA",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11abeb",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A"
+          ],
+          "basis": "IVE-BDC declared U-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 3.18,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 1
+          },
+          "observations": [
+            {
+              "source": {
+                "dataset": "IVE-BDC",
+                "code": "EFCH11abeb"
+              },
+              "indicator": "GWP-total",
+              "modules": [
+                "A1",
+                "A2",
+                "A3"
+              ],
+              "value": 3.18,
+              "unit": "kgCO2e/m2"
+            }
+          ],
+          "status": "verified_from_source"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 121.02,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11abeb",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/abeb"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "EFFH.3adaa",
+            "parent_code": "EFCH11abeb",
+            "depth": 1,
+            "description": "Fábrica CV BHV 40x20x12.5 liso",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 42.93,
+            "amount": 42.93,
+            "slot": "HP",
+            "is_industrialized": false
+          },
+          {
+            "code": "EFFC.1acca",
+            "parent_code": "EFCH11abeb",
+            "depth": 1,
+            "description": "Fábrica LH 24x11.5x7 e 7 cm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 39.58,
+            "amount": 39.58,
+            "slot": "HI",
+            "is_industrialized": false
+          },
+          {
+            "code": "ENTF.3abd",
+            "parent_code": "EFCH11abeb",
+            "depth": 1,
+            "description": "Aislamiento fachada EPS 0.036 40 mm",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 12.51,
+            "amount": 12.51,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "ERPE.6cccbc",
+            "parent_code": "EFCH11abeb",
+            "depth": 1,
+            "description": "Enfoscado CSIV-W2 rugoso vertical exterior",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 13.35,
+            "amount": 13.35,
+            "slot": "RE",
+            "is_industrialized": false
+          },
+          {
+            "code": "ERPG.4aaa",
+            "parent_code": "EFCH11abeb",
+            "depth": 1,
+            "description": "Guarnecido y enlucido de yeso vertical",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 12.65,
+            "amount": 12.65,
+            "slot": "RI",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified_from_source"
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 0,
+        "unit": "%",
+        "industrialized_cost": 0,
+        "total_direct_cost": 121.02,
+        "mapping_coverage": 1,
+        "status": "calculated_from_verified_decomposition"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.506,
+        "environmental_performance": 0.974,
+        "economic_performance": 0.682,
+        "industrialization": 0,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-001-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-001.ifc"
+        }
+      ],
+      "data_quality_notes": [
+        "Source record contradicts the mapping material XPS; EPS is retained because it is the source-declared insulation.",
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ],
+      "status": "ACTIVE"
+    },
+    {
+      "code": "FAC-TRD-002",
+      "name_es": "Bloque de hormigón + lana mineral + ladrillo",
+      "description": "Bloque de hormigón + lana mineral + ladrillo",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.5",
+          "code": "F 5.5",
+          "mapping": "candidate_from_mapping"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11dccc",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/dccc",
+          "retrieval_status": "source_page_reached_but_numeric_content_not_machine_readable"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 335.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "enlucido_de_yeso",
+            "source_material_name_es": "Enlucido de yeso",
+            "thickness": 15
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "concrete_masonry",
+            "product_family": "concrete_block_masonry",
+            "source_material_name_es": "Bloque de hormigón",
+            "thickness": 150
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ligeramente_ventilada",
+            "source_material_name_es": "Cámara de aire ligeramente ventilada",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 50
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "hoja_de_ladrillo",
+            "source_material_name_es": "Hoja de ladrillo",
+            "thickness": 90
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.609,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 5.5",
+            "section": "4.2.5",
+            "mapping": "equivalent_proxy"
+          },
+          "calculation": {
+            "formula": "1/(0.36 + R_AT)",
+            "assumed_insulation_conductivity": 0.039,
+            "insulation_thickness_mm": 50,
+            "R_AT": 1.282,
+            "status": "CTE_equivalent_proxy_not_source_measurement"
+          }
+        },
+        "surface_mass": {
+          "value": 206,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 5.5",
+            "section": "4.2.5",
+            "mapping": "equivalent_proxy"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 5,
+          "unit": "1",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 5.5",
+            "section": "4.2.5",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI90",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 55,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 5.5",
+            "section": "4.2.5",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 50,
+          "unit": "dBA",
+          "source": {
+            "dataset": "CTE-CEC",
+            "code": "F 5.5",
+            "section": "4.2.5",
+            "mapping": "equivalent_proxy",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A"
+          ],
+          "basis": "CTE equivalent proxy; mapped IVE selector unresolved"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 32.11,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 124.25,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11dccc",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/dccc"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 17.4,
+        "unit": "%",
+        "industrialized_cost": 21.62,
+        "total_direct_cost": 124.25,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.46,
+        "environmental_performance": 0.732,
+        "economic_performance": 0.673,
+        "industrialization": 0.174,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-002-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-002.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-TRD-003",
+      "name_es": "Fachada tradicional de bloque hueco de hormigón con lana mineral y trasdosado seco",
+      "description": "Cerramiento con hoja principal de bloque hueco de hormigón de 15 cm, enfoscado exterior CSIV-W2, cámara de aire, lana mineral de 50 mm y trasdosado interior 63/400 (48+15).",
+      "functional_unit": "m2",
+      "classifications": [
+        {
+          "scheme": "CTE-CEC",
+          "version": "v6.3-2010",
+          "section": "4.2.5",
+          "code": "F 5.5",
+          "mapping": "equivalent_source_based"
+        }
+      ],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11hbac",
+          "label": "BH15+PYL-A+MW-0.034/50",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/hbac",
+          "retrieval_status": "verified_from_supplied_source_capture"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 280
+      },
+      "slots": [
+        {
+          "key": "RE",
+          "name_es": "Revestimiento exterior continuo",
+          "role": "external_finish",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "cement_render",
+            "product_family": "render_csiv_w2",
+            "thickness": 15
+          }
+        },
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "concrete_masonry",
+            "product_family": "hollow_concrete_block",
+            "nominal_dimensions": [
+              400,
+              200,
+              150
+            ],
+            "thickness": 150
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "ventilation_db_he": "slightly_ventilated",
+            "ventilation_db_hs": "unventilated",
+            "thickness": 40
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico y acústico",
+          "role": "thermal_acoustic_insulation",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "hydrophilic": false,
+            "thickness": 50,
+            "thermal_conductivity": 0.034,
+            "thermal_resistance": 1.471,
+            "integrated_in_slot": "TI"
+          }
+        },
+        {
+          "key": "TI",
+          "name_es": "Trasdosado interior seco",
+          "role": "internal_dry_lining",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "gypsum_board_system",
+            "product_family": "metal_stud_plasterboard_lining",
+            "system": "63/400 (48+15)",
+            "system_depth": 63,
+            "stud_material": "galvanized_steel",
+            "stud_depth": 48,
+            "stud_spacing": 400,
+            "board_material": "gypsum_plasterboard",
+            "board_thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.49,
+          "unit": "W/m2K",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac",
+            "reference": "CTE-DB-HE"
+          }
+        },
+        "surface_mass": {
+          "value": 197,
+          "unit": "kg/m2",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac"
+          }
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "unit": "1",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac",
+            "reference": "CTE-DB-HS"
+          }
+        },
+        "fire_resistance": {
+          "value": "EI60",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac",
+            "reference": "CTE-DB-SI"
+          }
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 47,
+          "unit": "dBA",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac",
+            "reference": "CTE-DB-HR"
+          }
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 42,
+          "unit": "dBA",
+          "source": {
+            "dataset": "IVE-BDC",
+            "code": "EFCH11hbac",
+            "reference": "CTE-DB-HR"
+          }
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [
+            "A",
+            "B",
+            "C"
+          ],
+          "basis": "IVE-BDC declared U-value"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 2.0,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "arithmetic_mean",
+            "sample_count": 1
+          },
+          "observations": [
+            {
+              "source": {
+                "dataset": "IVE-BDC",
+                "code": "EFCH11hbac"
+              },
+              "indicator": "GWP-total",
+              "modules": [
+                "A1",
+                "A2",
+                "A3"
+              ],
+              "value": 2.0,
+              "unit": "kgCO2e/m2"
+            }
+          ],
+          "status": "verified_from_source"
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 108.94,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCH11hbac",
+          "url": "https://bdc.five.es/BDC26/1/EFCH11$/hbac"
+        },
+        "bc3_decomposition": [
+          {
+            "code": "EFFH.3aeaa",
+            "parent_code": "EFCH11hbac",
+            "depth": 1,
+            "description": "Fábrica CV BHV 40x20x15 liso",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 48.58,
+            "amount": 48.58,
+            "slot": "HP",
+            "is_industrialized": false
+          },
+          {
+            "code": "EFPY11abaaa",
+            "parent_code": "EFCH11hbac",
+            "depth": 1,
+            "description": "Trasdosado 63/400 (48+15)",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 30.41,
+            "amount": 30.41,
+            "slot": "TI",
+            "is_industrialized": false
+          },
+          {
+            "code": "ENTF.1badb",
+            "parent_code": "EFCH11hbac",
+            "depth": 1,
+            "description": "MW 0.034 e 50 mm interior/sob perfilería",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 16.6,
+            "amount": 16.6,
+            "slot": "AT",
+            "is_industrialized": false
+          },
+          {
+            "code": "ERPE.6cccbc",
+            "parent_code": "EFCH11hbac",
+            "depth": 1,
+            "description": "Enfoscado CSIV-W2 rugoso vertical exterior",
+            "unit": "m2",
+            "quantity_per_fu": 1,
+            "unit_price": 13.35,
+            "amount": 13.35,
+            "slot": "RE",
+            "is_industrialized": false
+          }
+        ],
+        "status": "verified_from_source"
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 0,
+        "unit": "%",
+        "industrialized_cost": 0,
+        "total_direct_cost": 108.94,
+        "mapping_coverage": 1,
+        "status": "calculated_from_verified_decomposition"
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.6,
+        "environmental_performance": 0.983,
+        "economic_performance": 0.713,
+        "industrialization": 0,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-003-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-003.ifc"
+        }
+      ],
+      "data_quality_notes": [
+        "Mapped composition was overridden by the mapped IVE source, which is a mineral-wool dry-lining solution rather than XPS + ceramic inner leaf.",
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ],
+      "status": "ACTIVE"
+    },
+    {
+      "code": "FAC-TRD-004",
+      "name_es": "Ladrillo caravista + EPS",
+      "description": "Ladrillo caravista + EPS",
+      "functional_unit": "m2",
+      "classifications": [],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2abdb",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/abdb",
+          "retrieval_status": "source_page_reached_but_numeric_content_not_machine_readable"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 295.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "ladrillo_perforado",
+            "source_material_name_es": "Ladrillo perforado",
+            "format": "1/2 pie",
+            "thickness": 120
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ligeramente_ventilada",
+            "source_material_name_es": "Cámara de aire ligeramente ventilada",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "EPS",
+            "product_family": "expanded_polystyrene_board",
+            "source_material_name_es": "EPS",
+            "thickness": 60
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "hoja_de_ladrillo",
+            "source_material_name_es": "Hoja de ladrillo",
+            "thickness": 70
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "revestimiento_interior",
+            "source_material_name_es": "Revestimiento interior",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.471,
+          "status": "synthetic_poc_estimate",
+          "unit": "W/m2K",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 221,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI90",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 54,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 46,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "not_assessable"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 40.4,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 111.19,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2abdb",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/abdb"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 13.8,
+        "unit": "%",
+        "industrialized_cost": 15.34,
+        "total_direct_cost": 111.19,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.622,
+        "environmental_performance": 0.663,
+        "economic_performance": 0.707,
+        "industrialization": 0.138,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-004-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-004.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-TRD-005",
+      "name_es": "Ladrillo caravista + lana mineral",
+      "description": "Ladrillo caravista + lana mineral",
+      "functional_unit": "m2",
+      "classifications": [],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2abad",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/abad",
+          "retrieval_status": "source_page_reached_but_numeric_content_not_machine_readable"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 295.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "ladrillo_perforado",
+            "source_material_name_es": "Ladrillo perforado",
+            "format": "1/2 pie",
+            "thickness": 120
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ligeramente_ventilada",
+            "source_material_name_es": "Cámara de aire ligeramente ventilada",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "mineral_wool",
+            "product_family": "mineral_wool_board",
+            "source_material_name_es": "Lana mineral",
+            "thickness": 60
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "hoja_de_ladrillo",
+            "source_material_name_es": "Hoja de ladrillo",
+            "thickness": 70
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "revestimiento_interior",
+            "source_material_name_es": "Revestimiento interior",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.516,
+          "status": "synthetic_poc_estimate",
+          "unit": "W/m2K",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 239,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 5,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI90",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 48,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 50,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "not_assessable"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 32.99,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 120.33,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2abad",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/abad"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 14.5,
+        "unit": "%",
+        "industrialized_cost": 17.45,
+        "total_direct_cost": 120.33,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.569,
+        "environmental_performance": 0.725,
+        "economic_performance": 0.683,
+        "industrialization": 0.145,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-005-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-005.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    },
+    {
+      "code": "FAC-TRD-006",
+      "name_es": "Ladrillo caravista + PUR proyectado",
+      "description": "Ladrillo caravista + PUR proyectado",
+      "functional_unit": "m2",
+      "classifications": [],
+      "source_references": [
+        {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2ache",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/ache",
+          "retrieval_status": "source_page_reached_but_numeric_content_not_machine_readable"
+        }
+      ],
+      "attributes": {
+        "is_external": true,
+        "load_bearing": false,
+        "total_thickness": 315.0,
+        "total_thickness_basis": "synthetic_poc_sum_of_slot_thicknesses"
+      },
+      "slots": [
+        {
+          "key": "HP",
+          "name_es": "Hoja principal",
+          "role": "main_leaf",
+          "sequence": 10,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "ladrillo_perforado",
+            "source_material_name_es": "Ladrillo perforado",
+            "format": "1/2 pie",
+            "thickness": 120
+          }
+        },
+        {
+          "key": "C",
+          "name_es": "Cámara de aire",
+          "role": "air_cavity",
+          "sequence": 20,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "c_mara_de_aire_ligeramente_ventilada",
+            "source_material_name_es": "Cámara de aire ligeramente ventilada",
+            "thickness": 30
+          }
+        },
+        {
+          "key": "AT",
+          "name_es": "Aislamiento térmico",
+          "role": "thermal_insulation",
+          "sequence": 30,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "pur_proyectado",
+            "source_material_name_es": "PUR proyectado",
+            "thickness": 80
+          }
+        },
+        {
+          "key": "HI",
+          "name_es": "Hoja interior",
+          "role": "inner_leaf",
+          "sequence": 40,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "hoja_de_ladrillo",
+            "source_material_name_es": "Hoja de ladrillo",
+            "thickness": 70
+          }
+        },
+        {
+          "key": "RI",
+          "name_es": "Revestimiento interior",
+          "role": "internal_finish",
+          "sequence": 50,
+          "required": true,
+          "properties": {
+            "material_family": "other",
+            "product_family": "revestimiento_interior",
+            "source_material_name_es": "Revestimiento interior",
+            "thickness": 15
+          }
+        }
+      ],
+      "metrics": {
+        "u_value": {
+          "value": 0.406,
+          "status": "synthetic_poc_estimate",
+          "unit": "W/m2K",
+          "synthetic": true
+        },
+        "surface_mass": {
+          "value": 224,
+          "status": "synthetic_poc_estimate",
+          "unit": "kg/m2",
+          "synthetic": true
+        },
+        "waterproofing_grade": {
+          "value": 4,
+          "status": "synthetic_poc_estimate",
+          "unit": "1",
+          "synthetic": true
+        },
+        "fire_resistance": {
+          "value": "EI90",
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra": {
+          "value": 51,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        },
+        "airborne_sound_insulation_ra_tr": {
+          "value": 45,
+          "status": "synthetic_poc_estimate",
+          "unit": "dBA",
+          "synthetic": true
+        }
+      },
+      "cte_compliance": {
+        "profile": "CTE-HE1-AND-v1",
+        "u_value": {
+          "compliant_winter_zones": [],
+          "status": "not_assessable"
+        }
+      },
+      "environmental_data": {
+        "gwp_a1_a3": {
+          "value": 41.22,
+          "unit": "kgCO2e/m2",
+          "aggregation": {
+            "method": "synthetic_poc_estimate",
+            "sample_count": 1
+          },
+          "observations": [],
+          "status": "synthetic_poc_estimate",
+          "synthetic": true
+        }
+      },
+      "economic_data": {
+        "functional_unit": "m2",
+        "currency": "EUR",
+        "unit_cost": 139.17,
+        "source": {
+          "dataset": "IVE-BDC",
+          "code": "EFCC.2ache",
+          "url": "https://bdc.five.es/BDC26/1/EFCC.2$/ache"
+        },
+        "bc3_decomposition": [],
+        "source_observations": [],
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "industrialization_data": {
+        "method": "AVRA-IDI-SOLUTION-v1",
+        "reference": {
+          "standard": "UNE 41610:2026",
+          "adaptation": "generic_solution_scale"
+        },
+        "source": "economic_data.bc3_decomposition",
+        "value": 10.5,
+        "unit": "%",
+        "industrialized_cost": 14.61,
+        "total_direct_cost": 139.17,
+        "mapping_coverage": 1.0,
+        "status": "synthetic_poc_estimate",
+        "synthetic": true
+      },
+      "viva_metrics": {
+        "energy_efficiency": 0.699,
+        "environmental_performance": 0.657,
+        "economic_performance": 0.634,
+        "industrialization": 0.105,
+        "status": "synthetic_poc_normalized_metrics"
+      },
+      "assets": [
+        {
+          "id": "FAC-TRD-006-IFC",
+          "type": "bim_model",
+          "format": "IFC",
+          "role": "primary_generic_model",
+          "uri": "assets/ifc/generic/FAC-TRD-006.ifc"
+        }
+      ],
+      "status": "ACTIVE",
+      "data_quality_notes": [
+        "PoC DEMO DATA: one or more previously unresolved values were filled with coherent synthetic estimates for database/API testing; do not use these values for design, compliance, procurement or certification."
+      ]
+    }
+  ]
+}
